@@ -61,4 +61,16 @@ describe('<App />', () => {
       button.props.onClick()
     })
   })
+
+  it('<App /> contains <Header />, <Description />, <RandomDogButton />', () => {
+    const { App } = require('../src/App')
+    const { Header } = require('../src/Header')
+    const { Description } = require('../src/Description')
+    const { RandomDogButton } = require('../src/RandomDogButton')
+
+    const res = renderer.create(<App />)
+    res.root.findByType(Header)
+    res.root.findByType(Description)
+    res.root.findByType(RandomDogButton)
+  })
 })
