@@ -3,14 +3,9 @@ import renderer, { act } from 'react-test-renderer'
 import { App } from '../src/App'
 
 describe('<App />', () => {
-  let setState: React.Dispatch<unknown> | undefined = undefined
   const useState = React.useState
   const useStateSpy = jest.spyOn(React, 'useState')
-  useStateSpy.mockImplementation((v?: unknown) => {
-    const [value, dispatcher] = useState(v)
-    setState = dispatcher
-    return [value, dispatcher]
-  })
+  useStateSpy.mockImplementation((v?: unknown) => useState(v))
 
   afterEach(() => {
     jest.clearAllMocks()
