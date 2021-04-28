@@ -1,8 +1,29 @@
 export const imageUrl = 'https://avatars.githubusercontent.com/u/298748'
+
+export type Breeds = Record<string, string[]>
+
+export const breeds: Breeds = {
+  katagiri: [],
+  watarai: [],
+  hotori: [],
+  kotoyose: [],
+  reizeiin: [],
+  onabuta: [],
+  tadasugawa: [],
+  susuko: [],
+  tachibana: ['asane', 'junnosuke'],
+}
+
+export const mockBreedsServerResponse = {
+  message: breeds,
+  status: 'success',
+}
+
 export const mockServerResponse = {
   message: imageUrl,
   status: 'success',
 }
+
 export const mockResponse: Response = {
   headers: {} as any,
   ok: true,
