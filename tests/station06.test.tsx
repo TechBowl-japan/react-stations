@@ -1,7 +1,7 @@
 import React from 'react'
 import renderer, { act } from 'react-test-renderer'
 import { App } from '../src/App'
-import { mockResponse, imageUrl } from './mock/fetch'
+import { imageUrl, fetchMock } from './mock/fetch'
 
 describe('<App />', () => {
   const callback = {
@@ -13,12 +13,7 @@ describe('<App />', () => {
 
   window.fetch = fetch
 
-  fetch.mockImplementation((resource, ..._) => {
-    const url = typeof resource === 'string' ? resource : resource.url
-    return Promise.resolve({
-      ...mockResponse, url,
-    })
-  })
+  fetch.mockImplementation(fetchMock)
 
   useStateSpy.mockImplementation((value?: unknown) => {
     return [

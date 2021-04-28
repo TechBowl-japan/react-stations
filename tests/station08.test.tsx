@@ -1,19 +1,13 @@
 import React from 'react'
 import renderer, { act } from 'react-test-renderer'
-import { mockResponse, imageUrl } from './mock/fetch'
+import { imageUrl, fetchMock } from './mock/fetch'
 
 describe('<App />', () => {
   const fetch = jest.fn()
 
   window.fetch = fetch
 
-  fetch.mockImplementation((resource, ..._) => {
-    const url = typeof resource === 'string' ? resource : resource.url
-    return Promise.resolve({
-      ...mockResponse,
-      url,
-    })
-  })
+  fetch.mockImplementation(fetchMock)
 
   afterEach(() => {
     jest.clearAllMocks()
