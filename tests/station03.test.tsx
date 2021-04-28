@@ -34,6 +34,8 @@ it('<App /> contains a text node', () => {
 
     stack = [...children, ...stack]
   }
+
+  expect(hasChildTextNode).toBe(true)
 })
 
 it('<App /> has a <img> with src', () => {
