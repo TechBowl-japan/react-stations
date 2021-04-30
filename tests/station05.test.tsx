@@ -1,8 +1,14 @@
 import React from 'react'
 import renderer, { act } from 'react-test-renderer'
 import { App } from '../src/App'
+import { fetchMock } from './mock/fetch'
+import { createAsync } from './utils/createAsync'
 
-describe('<App />', () => {
+describe('Station No.5', () => {
+  const fetch = jest.fn()
+  window.fetch = fetch
+  fetch.mockImplementation(fetchMock)
+
   const useState = React.useState
   const useStateSpy = jest.spyOn(React, 'useState')
   useStateSpy.mockImplementation((v?: unknown) => useState(v))
@@ -17,15 +23,15 @@ describe('<App />', () => {
     expect(useStateSpy).toBeCalled()
   })
 
-  it('state changes when the button is clicked', () => {
-    const res = renderer.create(<App />)
+  it('state changes when the button is clicked', async () => {
+    const res = await createAsync(<App />)
     const img = res.root.findByType('img')
     const button = res.root.findByType('button')
 
     const initialImg = img.props.src
     expect(initialImg).not.toBeFalsy()
 
-    act(() => {
+    await act(async () => {
       button.props.onClick()
     })
 

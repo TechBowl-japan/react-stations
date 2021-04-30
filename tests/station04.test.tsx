@@ -1,9 +1,14 @@
 import React from 'react'
 import renderer, { act } from 'react-test-renderer'
 import { App } from '../src/App'
+import { fetchMock } from './mock/fetch'
+import { createAsync } from './utils/createAsync'
 
+describe('Station No.4', () => {
+  const fetch = jest.fn()
+  window.fetch = fetch
+  fetch.mockImplementation(fetchMock)
 
-describe('<App />', () => {
   let setState: React.Dispatch<unknown> | undefined = undefined
   const useState = React.useState
   const useStateSpy = jest.spyOn(React, 'useState')
@@ -17,14 +22,13 @@ describe('<App />', () => {
     jest.clearAllMocks()
   })
 
-  it('<App /> calls useState', () => {
-    renderer.create(<App />)
-
+  it('<App /> calls useState', async () => {
+    await createAsync(<App />)
     expect(useStateSpy).toBeCalled()
   })
 
-  it('<img> uses a state value', () => {
-    const res = renderer.create(<App />)
+  it('<img> uses a state value', async () => {
+    const res = await createAsync(<App />)
     const img = res.root.findByType('img')
     const injectValue = '🐕'
 
@@ -32,7 +36,7 @@ describe('<App />', () => {
     expect(useStateSpy).toBeCalledWith(img.props.src)
 
     useStateSpy.mockClear()
-    
+
     expect(setState).not.toBeUndefined()
 
     act(() => {

@@ -1,9 +1,16 @@
 import * as React from 'react'
-import renderer from 'react-test-renderer'
+import renderer, { act } from 'react-test-renderer'
 import { App } from '../src/App'
+import { fetchMock } from './mock/fetch'
 
-it('Can create <App />', () => {
-  renderer.create(
-    <App />,
-  )
+describe('Station No.1', () => {
+  const fetch = jest.fn()
+  window.fetch = fetch
+  fetch.mockImplementation(fetchMock)
+
+  it('Can create <App />', async () => {
+    await act(async () => {
+      renderer.create(<App />)
+    })
+  })
 })

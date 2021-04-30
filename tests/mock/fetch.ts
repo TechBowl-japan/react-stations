@@ -74,13 +74,13 @@ const mockResponse = (
 
 const randomImageTest = /^(https?)?:\/\/dog.ceo\/api\/breeds\/image\/random\/?$/
 const randomImageTestByBreed = /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)(\/([A-Za-z]+))?\/image\/random\/?$/
-const breedsAllTest = /^(https?)?:\/\/dog.ceo\/api\/breeds\/all\/?$/
+const breedsAllTest = /^(https?)?:\/\/dog.ceo\/api\/breeds\/list\/all\/?$/
 
 // not used
-// const randomMultipleImageTest = /^(https?)?:\/\/dog.ceo\/api\/breeds\/image\/random\/([1-9]*[0-9])\/?$/
-// const breedImagesTest = /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)\/images\/?$/
-// const randomMultipleImageTestByBreed = /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)(\/([A-Za-z]+))?\/image\/random\/([1-9]*[0-9])\/?$/
-// const breedListTest = /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)\/list\/?$/
+const randomMultipleImageTest = /^(https?)?:\/\/dog.ceo\/api\/breeds\/image\/random\/([1-9]*[0-9])\/?$/
+const breedImagesTest = /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)\/images\/?$/
+const randomMultipleImageTestByBreed = /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)(\/([A-Za-z]+))?\/image\/random\/([1-9]*[0-9])\/?$/
+const breedListTest = /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)\/list\/?$/
 
 const pickOne = <T>(a: T[]): T | undefined => {
   if (a.length === 0) {
@@ -88,6 +88,10 @@ const pickOne = <T>(a: T[]): T | undefined => {
   }
 
   return a[Math.floor(a.length * Math.random())]
+}
+
+const unimplementedMockApiRouteHandler = () => {
+  throw new Error('unhandled API route. Did you read the manual?')
 }
 
 const mockApiRoutes: {
@@ -157,10 +161,30 @@ const mockApiRoutes: {
       }
     },
   },
+  {
+    test: randomMultipleImageTest,
+    handle: unimplementedMockApiRouteHandler,
+  },
+  {
+    test: breedImagesTest,
+    handle: unimplementedMockApiRouteHandler,
+  },
+  {
+    test: randomMultipleImageTestByBreed,
+    handle: unimplementedMockApiRouteHandler,
+  },
+  {
+    test: breedListTest,
+    handle: unimplementedMockApiRouteHandler,
+  }
 ]
 
 export const fetchMock: typeof window.fetch = (resource, ..._) => {
   const url = typeof resource === 'string' ? resource : resource.url
-  const res = mockApiRoutes.find(r => r.test.test(url))!.handle(url)
+  const handler = mockApiRoutes.find(r => r.test.test(url))
+  if (!handler) {
+    throw new Error(`unhandled API route "${url}". Did you read the manual?`)
+  }
+  const res = handler!.handle(url)
   return Promise.resolve(mockResponse(url, res, res.code))
 }
