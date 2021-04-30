@@ -18,21 +18,8 @@ describe('<App />', () => {
     expect(useEffectSpy).toBeCalled()
   })
 
-  it('<RandomDogButton /> contains list of breeds', async () => {
-    const res = await createAsync(<RandomDogButton />)
-
-    const breedsSet = new Set(breedsList)
-    const options = res.root.findAllByType('option')
-
-    // there might be "All breeds" options
-    options.forEach((o) => {
-      const b = o.props.value
-      if (b) {
-        expect(breedsSet.has(b)).toBeTruthy()
-        breedsSet.delete(b)
-      }
-    })
-
-    expect(breedsSet.size).toStrictEqual(0)
+  it('<RandomDogButton /> calls fetch', async () => {
+    await createAsync(<RandomDogButton />)
+    expect(fetch).toBeCalled()
   })
 })
