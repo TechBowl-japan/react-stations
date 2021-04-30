@@ -1,13 +1,38 @@
 import React from 'react'
 import renderer, { act } from 'react-test-renderer'
 import { RandomDogButton } from '../src/RandomDogButton'
-import { imageUrl, fetchMock } from './mock/fetch'
+import { breeds, fetchMock } from './mock/fetch'
+import { createAsync } from './utils/createAsync'
+
+const breedsList = Object.keys(breeds)
 
 describe('<App />', () => {
+  const fetch = jest.fn()
+  window.fetch = fetch
+  fetch.mockImplementation(fetchMock)
+
   const useEffectSpy = jest.spyOn(React, 'useEffect')
 
-  it('<RandomDogButton /> calls React.useEffect', () => {
-    renderer.create(<RandomDogButton />)
+  it('<RandomDogButton /> calls React.useEffect', async () => {
+    await createAsync(<RandomDogButton />)
     expect(useEffectSpy).toBeCalled()
+  })
+
+  it('<RandomDogButton /> contains list of breeds', async () => {
+    const res = await createAsync(<RandomDogButton />)
+
+    const breedsSet = new Set(breedsList)
+    const options = res.root.findAllByType('option')
+
+    // there might be "All breeds" options
+    options.forEach((o) => {
+      const b = o.props.value
+      if (b) {
+        expect(breedsSet.has(b)).toBeTruthy()
+        breedsSet.delete(b)
+      }
+    })
+
+    expect(breedsSet.size).toStrictEqual(0)
   })
 })
