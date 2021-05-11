@@ -31,46 +31,37 @@ describe('<App />', () => {
     renderer.create(<Description />)
   })
 
-  it('Can mount <RandomDogButton />', async () => {
-    const { RandomDogButton } = require('../src/RandomDogButton')
-    expect(RandomDogButton).toBeTruthy()
+  it('Can mount <DogImage />', async () => {
+    const { DogImage } = require('../src/DogImage')
+    expect(DogImage).toBeTruthy()
     await act(async () => {
-      renderer.create(<RandomDogButton />)
+      renderer.create(<DogImage />)
     })
   })
 
-  it('<RandomDogButton /> has a prop called `handleClickRandomButton` which is called with a image from API', async done => {
-    const { RandomDogButton } = require('../src/RandomDogButton')
-    expect(RandomDogButton).toBeTruthy()
+  it('<DogImage /> has a prop called `url`', async () => {
+    const { DogImage } = require('../src/DogImage')
+    expect(DogImage).toBeTruthy()
 
-    const mockHandler = jest.fn()
-    mockHandler.mockImplementation((image: string) => {
-      expect(image).toStrictEqual(imageUrl)
-      done()
-    })
+    const dummyImageUrl = 'image.png'
 
     let res: ReactTestRenderer | undefined
     await act(async () => {
       res = renderer.create(
-        <RandomDogButton handleClickRandomButton={mockHandler} />,
+        <DogImage url={dummyImageUrl} />,
       )
     })
 
-    if (!res) {
-      throw new Error('failed to render')
-    }
-
-    const button = res.root.findByType('button')
-    act(() => {
-      button.props.onClick()
-    })
+    const dogImage = res?.root.findByType('img')
+    expect(dogImage).toBeTruthy()
+    expect(dogImage?.props.src).toStrictEqual(dummyImageUrl)
   })
 
-  it('<App /> contains <Header />, <Description />, <RandomDogButton />', async () => {
+  it('<App /> contains <Header />, <Description />, <DogImage />', async () => {
     const { App } = require('../src/App')
     const { Header } = require('../src/Header')
     const { Description } = require('../src/Description')
-    const { RandomDogButton } = require('../src/RandomDogButton')
+    const { DogImage } = require('../src/DogImage')
 
     let res: ReactTestRenderer | undefined
     await act(async () => {
@@ -83,6 +74,6 @@ describe('<App />', () => {
 
     res.root.findByType(Header)
     res.root.findByType(Description)
-    res.root.findByType(RandomDogButton)
+    res.root.findByType(DogImage)
   })
 })
