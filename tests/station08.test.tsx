@@ -43,18 +43,16 @@ describe('<App />', () => {
     const { DogImage } = require('../src/DogImage')
     expect(DogImage).toBeTruthy()
 
-    const dummyImageUrl = 'image.png'
-
     let res: ReactTestRenderer | undefined
     await act(async () => {
       res = renderer.create(
-        <DogImage url={dummyImageUrl} />,
+        <DogImage url={imageUrl} />,
       )
     })
 
     const dogImage = res?.root.findByType('img')
     expect(dogImage).toBeTruthy()
-    expect(dogImage?.props.src).toStrictEqual(dummyImageUrl)
+    expect(dogImage?.props.src).toStrictEqual(imageUrl)
   })
 
   it('<App /> contains <Header />, <Description />, <DogImage />', async () => {

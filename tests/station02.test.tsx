@@ -1,5 +1,5 @@
 import * as React from 'react'
-import renderer, { act, ReactTestRenderer } from 'react-test-renderer'
+import renderer, { act } from 'react-test-renderer'
 import { App } from '../src/App'
 import { fetchMock } from './mock/fetch'
 import { createAsync } from './utils/createAsync'

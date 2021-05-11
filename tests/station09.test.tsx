@@ -1,25 +1,32 @@
 import React from 'react'
 import renderer, { act } from 'react-test-renderer'
-import { RandomDogButton } from '../src/RandomDogButton'
-import { breeds, fetchMock } from './mock/fetch'
+import { fetchMock } from './mock/fetch'
 import { createAsync } from './utils/createAsync'
 
-const breedsList = Object.keys(breeds)
-
-describe('<App />', () => {
+describe('<DogListContainer />', () => {
   const fetch = jest.fn()
+  const useStateSpy = jest.spyOn(React, 'useState')
+
   window.fetch = fetch
   fetch.mockImplementation(fetchMock)
 
-  const useEffectSpy = jest.spyOn(React, 'useEffect')
-
-  it('<RandomDogButton /> calls React.useEffect', async () => {
-    await createAsync(<RandomDogButton />)
-    expect(useEffectSpy).toBeCalled()
+  it('exists', async () => {
+    const { DogListContainer } = require('../src/DogListContainer')
+    expect(DogListContainer).toBeTruthy()
+    await act(async () => {
+      renderer.create(<DogListContainer />)
+    })
   })
 
-  it('<RandomDogButton /> calls fetch', async () => {
-    await createAsync(<RandomDogButton />)
+  it('calls `fetch`', async () => {
+    const { DogListContainer } = require('../src/DogListContainer')
+    await createAsync(<DogListContainer />)
     expect(fetch).toBeCalled()
+  })
+
+  it('calls `useState`', async () => {
+    const { DogListContainer } = require('../src/DogListContainer')
+    const res = await createAsync(<DogListContainer />)
+    expect(useStateSpy).toBeCalled()
   })
 })
