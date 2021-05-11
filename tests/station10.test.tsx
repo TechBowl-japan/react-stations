@@ -25,16 +25,19 @@ describe('<BreedsSelect />', () => {
     expect(res.root.findAllByType('select').length).not.toBe(0)
     expect(res.root.findAllByType('option').length).not.toBe(0)
   })
+})
 
+describe('<App />', () => {
   it('value changes when `onChange` wes called', async () => {
-    const { BreedsSelect } = require('../src/BreedsSelect')
-    const mock = jest.fn()
-    const res = await createAsync(<BreedsSelect handleSelectBreed={mock} breeds={breeds} />)
+    const { App } = require('../src/App')
+    const res = await createAsync(<App />)
     const selectTag = res.root.findByType('select')!
     const value = 'test'
-  
+
     expect(selectTag).toBeTruthy()
-    selectTag.props.onChange({ target: { value } })
-    expect(mock).toBeCalledWith(value)
+    act(() => {
+      selectTag.props.onChange({ target: { value } })
+    })
+    expect(selectTag.props.value).toBe(value)
   })
 })
