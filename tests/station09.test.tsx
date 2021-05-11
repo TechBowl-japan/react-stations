@@ -26,7 +26,7 @@ describe('<DogListContainer />', () => {
 
   it('calls `useState`', async () => {
     const { DogListContainer } = require('../src/DogListContainer')
-    const res = await createAsync(<DogListContainer />)
+    await createAsync(<DogListContainer />)
     expect(useStateSpy).toBeCalled()
   })
 })
