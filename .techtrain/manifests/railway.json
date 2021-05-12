@@ -1,4 +1,16 @@
 {
-  "railwayId": 2,
-  "stations": {}
+  "railwayId": 3,
+  "stations": {
+    "1": "station01.json",
+    "2": "station02.json",
+    "3": "station03.json",
+    "4": "station04.json",
+    "5": "station05.json",
+    "6": "station06.json",
+    "7": "station07.json",
+    "8": "station08.json",
+    "9": "station09.json",
+    "10": "station10.json",
+    "11": "station11.json"
+  }
 }

@@ -1,0 +1,11 @@
+{
+  "name": "Station 03",
+  "id": 3,
+  "prepare": [],
+  "tests": [
+    {
+      "type": "jest",
+      "specFile": "./tests/station03.test.tsx"
+    }
+  ]
+}
