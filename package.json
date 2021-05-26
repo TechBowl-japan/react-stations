@@ -30,7 +30,7 @@
     "browserslist": "^4.16.6",
     "cross-env": "^7.0.3",
     "css-loader": "^5.2.5",
-    "eslint": "^7.26.0",
+    "eslint": "^7.27.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-webpack": "^0.13.1",
     "eslint-plugin-import": "^2.23.2",
