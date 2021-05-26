@@ -19,7 +19,7 @@
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "@techtrain/cli-railway": "^0.1.0-alpha.9",
     "@types/jest": "^26.0.23",
-    "@types/react": "^17.0.6",
+    "@types/react": "^17.0.8",
     "@types/react-dom": "^17.0.5",
     "@types/react-test-renderer": "^17.0.1",
     "autoprefixer": "^10.2.5",
@@ -29,11 +29,11 @@
     "babel-preset-react": "^6.24.1",
     "browserslist": "^4.16.6",
     "cross-env": "^7.0.3",
-    "css-loader": "^5.2.5",
-    "eslint": "^7.26.0",
+    "css-loader": "^5.2.6",
+    "eslint": "^7.27.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-webpack": "^0.13.1",
-    "eslint-plugin-import": "^2.23.2",
+    "eslint-plugin-import": "^2.23.3",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
@@ -49,7 +49,7 @@
     "simple-git-hooks": "^2.3.1",
     "style-loader": "^2.0.0",
     "ts-jest": "^26.5.6",
-    "ts-loader": "^9.2.1",
+    "ts-loader": "^9.2.2",
     "typescript": "^4.2.4",
     "webpack": "^5.37.1",
     "webpack-cli": "^4.7.0",
@@ -67,7 +67,8 @@
     "lint:fix": "eslint --ext .js ./src --fix",
     "login:techtrain": "techtrain-railway login",
     "hook:pre-commit": "techtrain-railway hook:pre-commit",
-    "hook:update": "simple-git-hooks"
+    "hook:update": "simple-git-hooks",
+    "postinstall": "yarn hook:update && yarn login:techtrain"
   },
   "simple-git-hooks": {
     "pre-commit": "yarn hook:pre-commit"
