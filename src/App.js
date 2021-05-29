@@ -7,4 +7,10 @@ import './App.css'
  * 
  * @type {React.FC}
  */
-export const App = () => <h2>Hello, world!</h2>
+export const App = () => {
+  return (
+    <div>
+      <h2>Hello, world!</h2>
+    </div>
+  )
+}
