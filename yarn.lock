@@ -1595,10 +1595,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@techtrain/cli-railway@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@techtrain/cli-railway/-/cli-railway-0.1.3.tgz#ca6151f0cbe4ba163ae1373bcc43c71cc13da0bf"
-  integrity sha512-k+z93v7bLFEh0HXmz130Fkuh+TCuU4Q0vw5FacAPT8XHHftp15xgDfltZOm8Yw/x16zIpjXsDxzZNGj6C6d8iA==
+"@techtrain/cli-railway@^0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@techtrain/cli-railway/-/cli-railway-0.1.8.tgz#e1a60d29f1b41831f8927599760870c217d0a423"
+  integrity sha512-srgloAPpCbquHNholulATjEeRDeEZ9xMJ0L3b6oGnN3zibZxO/FvBl86yHn6LOOtCbG5e1mdS9DOGuCNfbZz/A==
 
 "@tootallnate/once@1":
   version "1.1.2"
