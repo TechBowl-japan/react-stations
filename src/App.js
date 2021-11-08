@@ -10,7 +10,6 @@ import { useState } from 'react';
  */
 export const App = () => {
   const [url, setDogUrl] = useState("https://images.dog.ceo/breeds/eskimo/n02109961_21096.jpg");
-  // const update = () => setDogUrl("https://images.dog.ceo/breeds/hound-english/n02089973_1132.jpg");
       
   const handleClick = () => {
     fetch("https://dog.ceo/api/breeds/image/random")
@@ -20,14 +19,20 @@ export const App = () => {
 
   return (
     <div>
-      <header>
-        <h1>Dogアプリ</h1>
-      </header>
-      <p>犬の画像を表示するサイトです</p>
-      <p><img src={ url } /></p>
-      <button onClick={handleClick}>
-        更新
-      </button>
+      <div className="App-header">
+        <header>
+          <h1>Dogアプリ</h1>
+        </header>
+      </div>
+      <div className="wrap">
+        <span className="item">犬の画像を表示するサイトです</span>
+        <span className="item">
+          <img src={ url } />
+          <button className="btn" onClick={handleClick}>
+            更新
+          </button>
+        </span>
+      </div>
     </div>
   )
 }

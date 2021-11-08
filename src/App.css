@@ -1,0 +1,32 @@
+.App-header {
+  background-color: #eee; /* 変更 */
+  display: flex;
+  justify-content: center;
+}
+
+.wrap{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.item{
+  width: 48%;
+  text-align: center;
+}
+
+img{
+  margin: 30px;
+  display: block;
+  width: 48%;
+  height: auto;
+}
+
+.btn{
+  padding: 10px;
+  color: #fff;
+  line-height: 1;
+  background-color: #2285b1;
+  border-radius: 6px;
+}
