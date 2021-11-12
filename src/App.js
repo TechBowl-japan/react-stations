@@ -1,10 +1,8 @@
 // DO NOT DELETE
-
 import * as React from 'react'
 import './App.css'
 import { Header } from './Header.js'
 import { Description } from './Description.js';
-import { Dogimage } from './DogImage.js';
 
 /**
  * 
@@ -13,13 +11,11 @@ import { Dogimage } from './DogImage.js';
 export const App = () => {
   return (
     <div>
-      <div className="App-header">
-        <Header title="Dogアプリ" />
-      </div>
-      <div className="wrap">
-        <Description desc="犬の画像を表示するサイトです" />
-        <Dogimage url="https://images.dog.ceo/breeds/eskimo/n02109961_21096.jpg" />
-      </div>
+      <Header title="Dogアプリ" />
+      <Description
+        desc="犬の画像を表示するサイトです"
+        text="更新"  
+      />
     </div>
   )
 }
