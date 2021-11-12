@@ -1,13 +1,12 @@
 // DO NOT DELETE
-
 import * as React from 'react'
 
-function Header(props) {
+export function Header(props) {
   return (
-    <header>
-      <h1>{props.title}</h1>
-    </header>
+    <div className="App-header">
+      <header>
+        <h1>{props.title}</h1>
+      </header>
+    </div>
   )
 }
-
-export default Header;

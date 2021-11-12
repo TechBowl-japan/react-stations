@@ -1,9 +1,8 @@
 // DO NOT DELETE
-
 import * as React from 'react'
 import { useState } from 'react';
 
-function Dogimage(props){
+export function Dogimage(props){
   const [url, setDogUrl] = useState(props.url);
   const handleClick = () => {
     fetch("https://dog.ceo/api/breeds/image/random")
@@ -20,5 +19,3 @@ function Dogimage(props){
     </span>
   )
 }
-
-export default Dogimage;
