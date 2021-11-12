@@ -1,6 +1,6 @@
 // DO NOT DELETE
+
 import * as React from 'react'
-import './App.css'
 import { useState } from 'react';
 
 function Dogimage(props){

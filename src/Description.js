@@ -1,6 +1,6 @@
 // DO NOT DELETE
+
 import * as React from 'react'
-import './App.css'
 import Dogimage from './DogImage.js';
 
 function Description(props){

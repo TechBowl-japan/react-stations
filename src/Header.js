@@ -1,12 +1,12 @@
 // DO NOT DELETE
-import * as React from 'react'
-import './App.css'
 
-function Header() {
+import * as React from 'react'
+
+function Header(props) {
   return (
     <div className="App-header">
       <header>
-        <h1>Dogアプリ</h1>
+        <h1>{props.title}</h1>
       </header>
     </div>
   )

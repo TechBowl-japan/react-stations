@@ -12,7 +12,7 @@ import Description from './Description.js';
 export const App = () => {
   return (
     <div>
-      <Header/>
+      <Header title="Dogアプリ" />
       <Description desc="犬の画像を表示するサイトです" />  
     </div>
   )
