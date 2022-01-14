@@ -43,15 +43,18 @@ module.exports = {
     ],
   },
   devServer: {
-    contentBase: './public',
-    watchContentBase: true,
-    inline: true,
+    static: {
+      directory: path.resolve(__dirname, './public'),
+      watch: true,
+    },
+    client: {
+      overlay: true,
+    },
     hot: isDevelopment,
     historyApiFallback: true,
     compress: true,
-    lazy: false,
-    overlay: true,
     liveReload: isDevelopment,
+    port: 3000,
   },
   plugins: [
     isDevelopment && new ReactRefreshWebpackPlugin(),

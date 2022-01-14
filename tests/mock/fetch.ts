@@ -70,7 +70,7 @@ const mockResponse = (
   clone() {
     throw new Error('unimplemented; You are doing something wrong.')
   },
-})
+} as Response)
 
 const randomImageTest = /^(https?)?:\/\/dog.ceo\/api\/breeds\/image\/random\/?$/
 const randomImageTestByBreed = /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)(\/([A-Za-z]+))?\/image\/random\/?$/
