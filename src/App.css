@@ -1,0 +1,55 @@
+html {
+	background-color: #fefef4;
+	font: sans-serif;
+	margin: 0 auto;
+}
+
+button {
+	color: #fff;
+	background-color: #ee82ee;
+	box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px;
+	border: none;
+	cursor: pointer;
+	border-radius: 2px;
+	padding: 3px 7px;
+	margin: 10px 0;
+
+}
+button:hover {
+	background-color: #f134ce;
+	color: #fff;
+
+}
+
+header {
+	background-color: hsl(187, 70%, 41%);
+	height: 100px;
+	text-align: center;
+}
+h1 {
+	color: #fff;
+	font-size: 40px;
+	text-shadow: 4px 4px #458177;
+	margin: 0 auto;
+}
+
+header p {
+	color: #fff;
+	font-size: 12px;
+
+}
+.main {
+	height: 500px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.dog-img {
+	display:block;
+	height: 350px;
+	padding: 4px;
+	margin: 30px;
+	background-color: #f8f4e2;
+}
+
