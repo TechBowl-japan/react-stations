@@ -3,7 +3,7 @@ html {
 	font: sans-serif;
 	margin: 0 auto;
 }
-
+body { margin: 0; }
 button {
 	color: #fff;
 	background-color: #ee82ee;
@@ -52,4 +52,8 @@ header p {
 	margin: 30px;
 	background-color: #f8f4e2;
 }
-
+.dogs {
+	display:block;
+	height: 350px;
+	padding: 4px;
+}
