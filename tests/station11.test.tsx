@@ -1,9 +1,12 @@
 import React from 'react'
 import { act } from 'react-test-renderer'
-import { App } from '../src/App'
-import { DogListContainer } from '../src/DogListContainer'
 import { fetchMock } from './mock/fetch'
 import { createAsync } from './utils/createAsync'
+
+const { App } = require('../src/App') as { App: React.ComponentType<{}> }
+const { DogListContainer } = require('../src/DogListContainer') as {
+  DogListContainer: React.ComponentType<{}>
+}
 
 describe('<DogListContainer />', () => {
   const fetch = jest.fn()

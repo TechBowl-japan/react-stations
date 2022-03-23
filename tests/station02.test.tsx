@@ -1,9 +1,9 @@
 import * as React from 'react'
 import renderer, { act } from 'react-test-renderer'
-import { App } from '../src/App'
 import { fetchMock } from './mock/fetch'
 import { createAsync } from './utils/createAsync'
 
+const { App } = require('../src/App') as { App: React.ComponentType<{}> }
 
 describe('Station No.2', () => {
   const fetch = jest.fn()
