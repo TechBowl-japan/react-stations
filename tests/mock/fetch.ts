@@ -75,11 +75,11 @@ const mockResponse = (
 const randomImageTest = /^(https?)?:\/\/dog.ceo\/api\/breeds\/image\/random\/?$/
 const randomImageTestByBreed = /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)(\/([A-Za-z]+))?\/image\/random\/?$/
 const breedsAllTest = /^(https?)?:\/\/dog.ceo\/api\/breeds\/list\/all\/?$/
-const randomMultipleImageTestByBreed = /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)(\/([A-Za-z]+))?\/images\/random\/([1-9]*[0-9]){1,}\/?$/
 
 // not used
 const randomMultipleImageTest = /^(https?)?:\/\/dog.ceo\/api\/breeds\/image\/random\/([1-9]*[0-9])\/?$/
 const breedImagesTest = /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)\/images\/?$/
+const randomMultipleImageTestByBreed = /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)(\/([A-Za-z]+))?\/image\/random\/([1-9]*[0-9])\/?$/
 const breedListTest = /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)\/list\/?$/
 
 const pickOne = <T>(a: T[]): T | undefined => {
@@ -171,20 +171,7 @@ const mockApiRoutes: {
   },
   {
     test: randomMultipleImageTestByBreed,
-    handle(url: string){
-      const index = url.match('\d{1,}')
-      if(index === null){
-        return {
-          status: 'error',
-          message: 'No number specified',
-          code: 404
-        }
-      }
-      return {
-        message: Array.from({length: Number(index)}, () => imageUrl),
-        status: 'sucess'
-      }
-    },
+    handle: unimplementedMockApiRouteHandler,
   },
   {
     test: breedListTest,
