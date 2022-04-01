@@ -1,11 +1,16 @@
 {
   "name": "Station 07",
   "id": 7,
-  "prepare": [],
+  "prepare": [
+    {
+      "command": "yarn dev --port=9000",
+      "background": true
+    }
+  ],
   "tests": [
     {
-      "type": "jest",
-      "specFile": "./tests/station07.test.tsx"
+      "type": "cypress",
+      "specFile": "./cypress/integration/station07.test.tsx"
     }
   ]
 }
