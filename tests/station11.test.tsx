@@ -3,10 +3,6 @@ import { act } from 'react-test-renderer'
 import { fetchMock } from './mock/fetch'
 import { createAsync } from './utils/createAsync'
 
-// TODO: ここのテストがあっているかを確認して修正を行う
-// TODO: クリアしてほしい基準を決定→たたきを大木へ送る
-// →問題文からみて決定する。もし現状の基準が難しそうなら、問題文自体を変更して構わない
-
 const { App } = require('../src/App') as { App: React.ComponentType<{}> }
 const { DogListContainer } = require('../src/DogListContainer') as {
   DogListContainer: React.ComponentType<{}>
