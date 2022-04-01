@@ -15,8 +15,8 @@ describe('<App />', () => {
     const { container } = render(<App />)
     const header = container.querySelector('header')
 
-    if(!header){
-      throw new Error('<header> not exists')
+    if (!header) {
+      throw new Error('a <header> does not exist')
     }
 
     expect(compareColor(window.getComputedStyle(header).backgroundColor, '#f5f5f5')).toBe(true)
