@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react'
-import React from 'react'
+import * as React from 'react'
 import { createAsync } from './utils/createAsync'
 import { compareColor } from './utils/compareColor'
 
@@ -16,7 +16,7 @@ describe('<App />', () => {
     const header = container.querySelector('header')
 
     if(!header){
-      return
+      throw new Error('<header> not exists')
     }
 
     expect(compareColor(window.getComputedStyle(header).backgroundColor, '#f5f5f5')).toBe(true)
