@@ -8,8 +8,8 @@ Railway では Git で自分が取り組んだ内容を記録するときに、�
 
 ### 必要なツール
 
-1. Node.js( 14.* ) [ 12.* ,  16.* では動作しません]
-2. Yarn
+1. Node.js（v14.17.0以降; v16以降を推奨します）
+2. Yarn (v1)
 
 上記 2 つをインストールする必要があります。
 [HTML/CSS/JavaScript Railway](https://github.com/TechBowl-japan/html-stations) に取り組み済みで、初期設定が済んでいれば、必要なツールについてはインストール済みです。
