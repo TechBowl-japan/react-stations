@@ -188,7 +188,7 @@ const mockApiRoutes: {
       }
       return {
         message: Array.from({ length: Number(matchResult[5]) }, () => imageUrl),
-        status: 'sucess',
+        status: 'success',
       }
     },
   },
