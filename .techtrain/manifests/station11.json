@@ -4,7 +4,8 @@
   "prepare": [],
   "tests": [
     {
-      "type": "interview"
+      "type": "jest",
+      "specFile": "./tests/station11.test.tsx"
     }
   ]
 }
