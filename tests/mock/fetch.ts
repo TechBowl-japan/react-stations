@@ -41,46 +41,52 @@ const mockResponse = (
   url: string,
   serverResponse: any,
   code?: number,
-): Response => ({
-  headers: {} as any,
-  ok: true,
-  redirected: false,
-  status: code ?? 200,
-  statusText: statusTextByCode[code ?? 200] ?? 'OK',
-  trailer: {} as any,
-  type: 'default',
-  body: null,
-  url,
-  bodyUsed: false,
-  arrayBuffer() {
-    throw new Error('unimplemented; You are doing something wrong.')
-  },
-  blob() {
-    throw new Error('unimplemented; You are doing something wrong.')
-  },
-  formData() {
-    throw new Error('unimplemented; You are doing something wrong.')
-  },
-  json() {
-    return Promise.resolve(JSON.parse(JSON.stringify(serverResponse)))
-  },
-  text() {
-    return Promise.resolve(JSON.stringify(serverResponse))
-  },
-  clone() {
-    throw new Error('unimplemented; You are doing something wrong.')
-  },
-} as Response)
+): Response =>
+  ({
+    headers: {} as any,
+    ok: true,
+    redirected: false,
+    status: code ?? 200,
+    statusText: statusTextByCode[code ?? 200] ?? 'OK',
+    trailer: {} as any,
+    type: 'default',
+    body: null,
+    url,
+    bodyUsed: false,
+    arrayBuffer() {
+      throw new Error('unimplemented; You are doing something wrong.')
+    },
+    blob() {
+      throw new Error('unimplemented; You are doing something wrong.')
+    },
+    formData() {
+      throw new Error('unimplemented; You are doing something wrong.')
+    },
+    json() {
+      return Promise.resolve(JSON.parse(JSON.stringify(serverResponse)))
+    },
+    text() {
+      return Promise.resolve(JSON.stringify(serverResponse))
+    },
+    clone() {
+      throw new Error('unimplemented; You are doing something wrong.')
+    },
+  } as Response)
 
 const randomImageTest = /^(https?)?:\/\/dog.ceo\/api\/breeds\/image\/random\/?$/
-const randomImageTestByBreed = /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)(\/([A-Za-z]+))?\/image\/random\/?$/
+const randomImageTestByBreed =
+  /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)(\/([A-Za-z]+))?\/image\/random\/?$/
 const breedsAllTest = /^(https?)?:\/\/dog.ceo\/api\/breeds\/list\/all\/?$/
+const randomMultipleImageTestByBreed =
+  /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)(\/([A-Za-z]+))?\/images\/random\/(0|[1-9][0-9]*)\/?$/
 
 // not used
-const randomMultipleImageTest = /^(https?)?:\/\/dog.ceo\/api\/breeds\/image\/random\/([1-9]*[0-9])\/?$/
-const breedImagesTest = /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)\/images\/?$/
-const randomMultipleImageTestByBreed = /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)(\/([A-Za-z]+))?\/image\/random\/([1-9]*[0-9])\/?$/
-const breedListTest = /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)\/list\/?$/
+const randomMultipleImageTest =
+  /^(https?)?:\/\/dog.ceo\/api\/breeds\/image\/random\/([1-9]*[0-9])\/?$/
+const breedImagesTest =
+  /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)\/images\/?$/
+const breedListTest =
+  /^(https?)?:\/\/dog.ceo\/api\/breed\/([A-Za-z]+)\/list\/?$/
 
 const pickOne = <T>(a: T[]): T | undefined => {
   if (a.length === 0) {
@@ -171,12 +177,25 @@ const mockApiRoutes: {
   },
   {
     test: randomMultipleImageTestByBreed,
-    handle: unimplementedMockApiRouteHandler,
+    handle(url: string) {
+      const matchResult = url.match(randomMultipleImageTestByBreed)
+      if (matchResult === null) {
+        return {
+          status: 'error',
+          message: 'No number specified',
+          code: 404,
+        }
+      }
+      return {
+        message: Array.from({ length: Number(matchResult[5]) }, () => imageUrl),
+        status: 'success',
+      }
+    },
   },
   {
     test: breedListTest,
     handle: unimplementedMockApiRouteHandler,
-  }
+  },
 ]
 
 export const fetchMock: typeof window.fetch = (resource, ..._) => {

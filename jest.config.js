@@ -4,6 +4,8 @@ module.exports = {
   moduleFileExtensions: ['ts', 'js', 'tsx'],
   transform: {
     '^.+\\.[tj]sx?$': 'ts-jest',
+    "^.+\\.js$": "babel-jest",
+    "^.+\\.css$": "jest-transform-css"
   },
   globals: {
     'ts-jest': {
@@ -11,6 +13,5 @@ module.exports = {
     },
   },
   moduleNameMapper: {
-    '\\.(css|scss)$': '<rootDir>/node_modules/jest-css-modules',
   },
 }

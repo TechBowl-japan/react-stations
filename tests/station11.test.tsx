@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { act } from 'react-test-renderer'
 import { fetchMock } from './mock/fetch'
 import { createAsync } from './utils/createAsync'
