@@ -4,6 +4,7 @@ html {
 	margin: 0 auto;
 }
 body { margin: 0; }
+
 button {
 	color: #fff;
 	background-color: #ee82ee;
@@ -12,7 +13,7 @@ button {
 	cursor: pointer;
 	border-radius: 2px;
 	padding: 3px 7px;
-	margin: 10px 0;
+	margin: 10px 10px;
 
 }
 button:hover {
@@ -23,20 +24,24 @@ button:hover {
 
 header {
 	background-color: hsl(187, 70%, 41%);
-	height: 100px;
+	height: 110px;
 	text-align: center;
 }
 h1 {
 	color: #fff;
 	font-size: 40px;
 	text-shadow: 4px 4px #458177;
+	padding-top: 15px;
 	margin: 0 auto;
 }
 
 header p {
 	color: #fff;
 	font-size: 12px;
+}
 
+select {
+	margin-left: 20px;
 }
 .main {
 	height: 500px;
@@ -57,3 +62,25 @@ header p {
 	height: 350px;
 	padding: 4px;
 }
+
+.doglist-images {
+	display:block;
+	height: 180px;
+	padding: 4px;
+	margin: 10px 20px;
+	background-color: #f8f4e2;
+}
+
+.container
+{
+	width: 900px;
+	margin: 0 auto;
+}
+.dogimage_container
+{
+
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 auto;
+}
+
