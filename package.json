@@ -45,7 +45,7 @@
     "postcss": "^8.4.12",
     "postcss-loader": "^6.2.1",
     "postcss-preset-env": "^7.4.3",
-    "prettier": "^2.6.1",
+    "prettier": "^2.7.1",
     "react-refresh": "^0.11.0",
     "react-test-renderer": "^18.0.0",
     "simple-git-hooks": "^2.7.0",
