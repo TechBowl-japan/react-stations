@@ -1,11 +1,9 @@
 // DO NOT DELETE
 
-import * as React from 'react'
 import './App.css'
 
 /**
- * 
- * @type {React.FC}
+ * @type {() => JSX.Element}
  */
 export const App = () => {
   return (
