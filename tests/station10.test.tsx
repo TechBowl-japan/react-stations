@@ -1,43 +1,49 @@
-import React from 'react'
-import renderer, { act } from 'react-test-renderer'
-import { breeds as nestedBreeds, fetchMock } from './mock/fetch'
-import { createAsync } from './utils/createAsync'
+import { describe, expect, it, vi } from 'vitest'
+import { fireEvent, render, waitFor } from '@testing-library/react'
+import { fetchMock } from './mock/fetch'
 
-const breeds = Object.keys(nestedBreeds)
+const breeds = ['test', 'test2']
+
+interface IBreedsSelect {
+  BreedsSelect: (props: { breeds: string[] }) => JSX.Element
+}
 
 describe('<BreedsSelect />', () => {
-  const fetch = jest.fn()
+  const fetch = vi.fn()
 
   window.fetch = fetch
   fetch.mockImplementation(fetchMock)
 
   it('exists', async () => {
-    const { BreedsSelect } = require('../src/BreedsSelect')
+    const { BreedsSelect } = (await import(
+      '../src/BreedsSelect'
+    )) as IBreedsSelect
     expect(BreedsSelect).toBeTruthy()
-    await act(async () => {
-      renderer.create(<BreedsSelect breeds={breeds} />)
-    })
+    await render(<BreedsSelect breeds={breeds} />)
   })
 
   it('has `<select>` and `<option>` tags', async () => {
-    const { BreedsSelect } = require('../src/BreedsSelect')
-    const res = await createAsync(<BreedsSelect breeds={breeds} />)
-    expect(res.root.findAllByType('select').length).not.toBe(0)
-    expect(res.root.findAllByType('option').length).not.toBe(0)
+    const { BreedsSelect } = (await import(
+      '../src/BreedsSelect'
+    )) as IBreedsSelect
+    const res = await render(<BreedsSelect breeds={breeds} />)
+    expect(res.container.querySelectorAll('select').length).not.toBe(0)
+    expect(res.container.querySelectorAll('option').length).not.toBe(0)
   })
 })
 
 describe('<App />', () => {
   it('value changes when `onChange` wes called', async () => {
-    const { App } = require('../src/App')
-    const res = await createAsync(<App />)
-    const selectTag = res.root.findByType('select')!
+    const { App } = await import('../src/App')
+    const res = await render(<App />)
+    const selectTag = res.container.querySelector('select')!
     const value = 'test'
 
     expect(selectTag).toBeTruthy()
-    act(() => {
-      selectTag.props.onChange({ target: { value } })
+    await fireEvent.change(selectTag, { target: { value } })
+
+    await waitFor(() => {
+      expect(selectTag.value).toBe(value)
     })
-    expect(selectTag.props.value).toBe(value)
   })
 })
