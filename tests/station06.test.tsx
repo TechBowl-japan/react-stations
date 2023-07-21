@@ -1,51 +1,68 @@
-import React from 'react'
-import { act } from 'react-test-renderer'
-import { imageUrl, fetchMock } from './mock/fetch'
-import { createAsync } from './utils/createAsync'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { act, fireEvent, render, waitFor } from '@testing-library/react'
+import { fetchMock, imageUrl } from './mock/fetch'
 
-const { App } = require('../src/App') as { App: React.ComponentType<{}> }
+const React: typeof import('react') = await vi.importActual('react')
+
+const useState = vi.fn()
+
+vi.mock('react', () => {
+  return {
+    ...React,
+    useState,
+  }
+})
+
+const { App } = (await import('../src/App')) as { App: React.ComponentType<{}> }
 
 describe('<App />', () => {
-  const callback = {
-    run: (_: string) => {},
-  }
-
-  const fetch = jest.fn()
-  const useStateSpy = jest.spyOn(React, 'useState')
+  const fetch = vi.fn()
+  const setStateMock = vi.fn()
 
   window.fetch = fetch
-
   fetch.mockImplementation(fetchMock)
 
-  useStateSpy.mockImplementation((value?: unknown) => {
-    return [
-      value,
-      (value: string) => {
-        callback.run(value)
-      },
-    ] as any
+  beforeEach(() => {
+    useState.mockImplementation((v?: unknown) => {
+      const [value, dispatcher] = React.useState(v)
+      return [
+        value,
+        (value: unknown) => {
+          setStateMock(value)
+          return dispatcher(value)
+        },
+      ]
+    })
+  })
+
+  afterEach(() => {
+    vi.clearAllMocks()
   })
 
   it('fetch() is called and the response value is used', async () => {
-    const res = await createAsync(<App />)
-    const img = res.root.findByType('img')
-    const button = res.root.findByType('button')
+    const res = await render(<App />)
+    const img = res.container.querySelector('img')
+    const button = res.container.querySelector('button')
 
-    const initialImg = img.props.src
+    if (img === null) {
+      throw new Error('img is null')
+    }
+
+    if (button === null) {
+      throw new Error('button is null')
+    }
+
+    const initialImg = img.src
     expect(initialImg).not.toBeFalsy()
 
-    const valuePromise = new Promise<string>((resolve) => {
-      callback.run = value => resolve(value)
-    })
-
-    await act(async () => {
-      button.props.onClick()
+    await act(() => {
+      fireEvent.click(button)
     })
 
     // wait React.useState to be called
-    const value = await valuePromise
-
-    expect(fetch).toBeCalled()
-    expect(value).toStrictEqual(imageUrl)
+    await waitFor(() => {
+      expect(fetch).toBeCalled()
+      expect(setStateMock).toBeCalledWith(imageUrl)
+    })
   })
 })

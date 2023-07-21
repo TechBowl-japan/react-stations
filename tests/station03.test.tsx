@@ -1,24 +1,29 @@
+import { describe, expect, it, vi } from 'vitest'
 import * as React from 'react'
 import { fetchMock } from './mock/fetch'
-import { createAsync } from './utils/createAsync'
+import { render, waitFor } from '@testing-library/react'
 
-const { App } = require('../src/App') as { App: React.ComponentType<{}> }
+const { App } = (await import('../src/App')) as { App: React.ComponentType<{}> }
 
 describe('Station No.3', () => {
-  const fetch = jest.fn()
+  const fetch = vi.fn()
   window.fetch = fetch
   fetch.mockImplementation(fetchMock)
 
   it('<App /> has a <header>', async () => {
-    const res = await createAsync(<App />)
-    res.root.findByType('header')
+    const res = await render(<App />)
+    const header = res.container.querySelector('header')
+
+    await waitFor(() => {
+      expect(header).not.toBeNull()
+    })
   })
 
   it('<App /> contains a text node', async () => {
-    const res = await createAsync(<App />)
+    const res = await render(<App />)
 
     let hasChildTextNode = false
-    let stack = [...res.root.children]
+    let stack = Array.from(res.container.childNodes)
 
     // run a depth-first search for a text node
     while (stack.length !== 0 && !hasChildTextNode) {
@@ -27,25 +32,26 @@ describe('Station No.3', () => {
         throw new Error('unreachable code')
       }
 
-      if ((hasChildTextNode = typeof child === 'string')) {
+      if ((hasChildTextNode = child instanceof Text)) {
         break
       }
 
-      const children = child.children
+      const children = child.childNodes
       if (children.length === 0) {
         continue
       }
 
-      stack = [...children, ...stack]
+      stack = [...Array.from(children), ...stack]
     }
 
     expect(hasChildTextNode).toBe(true)
   })
 
   it('<App /> has a <img> with src', async () => {
-    const res = await createAsync(<App />)
+    const res = await render(<App />)
 
-    const img = res.root.findByType('img')
-    expect(img.props.src).toBeTruthy()
+    const img = res.container.querySelector('img')
+    expect(img).not.toBeNull()
+    expect(img!.src).toBeTruthy()
   })
 })
