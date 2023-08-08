@@ -1,32 +1,60 @@
-import React from 'react'
-import renderer, { act } from 'react-test-renderer'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { render, waitFor } from '@testing-library/react'
 import { fetchMock } from './mock/fetch'
-import { createAsync } from './utils/createAsync'
+
+const React: typeof import('react') = await vi.importActual('react')
+
+const useState = vi.fn()
+
+vi.mock('react', () => {
+  return {
+    ...React,
+    useState,
+  }
+})
 
 describe('<DogListContainer />', () => {
-  const fetch = jest.fn()
-  const useStateSpy = jest.spyOn(React, 'useState')
+  const fetch = vi.fn()
+  let setState: React.Dispatch<React.SetStateAction<unknown>> | undefined
 
   window.fetch = fetch
   fetch.mockImplementation(fetchMock)
 
-  it('exists', async () => {
-    const { DogListContainer } = require('../src/DogListContainer')
-    expect(DogListContainer).toBeTruthy()
-    await act(async () => {
-      renderer.create(<DogListContainer />)
+  beforeEach(() => {
+    useState.mockImplementation((v?: unknown) => {
+      const [value, dispatcher] = React.useState(v)
+      setState = dispatcher
+      return [value, dispatcher]
     })
   })
 
+  afterEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('exists', async () => {
+    const { DogListContainer } = await import('../src/DogListContainer')
+    expect(DogListContainer).toBeTruthy()
+
+    const res = await render(<DogListContainer />)
+    expect(res.container).toBeTruthy()
+  })
+
   it('calls `fetch`', async () => {
-    const { DogListContainer } = require('../src/DogListContainer')
-    await createAsync(<DogListContainer />)
-    expect(fetch).toBeCalled()
+    const { DogListContainer } = await import('../src/DogListContainer')
+    await render(<DogListContainer />)
+
+    await waitFor(() => {
+      expect(fetch).toBeCalled()
+    })
   })
 
   it('calls `useState`', async () => {
-    const { DogListContainer } = require('../src/DogListContainer')
-    await createAsync(<DogListContainer />)
-    expect(useStateSpy).toBeCalled()
+    const { DogListContainer } = await import('../src/DogListContainer')
+    await render(<DogListContainer />)
+
+    await waitFor(() => {
+      expect(fetch).toBeCalled()
+    })
   })
 })

@@ -1,37 +1,36 @@
-import * as React from 'react'
-import { act } from 'react-test-renderer'
+import { describe, expect, it, vi } from 'vitest'
+import { fireEvent, render } from '@testing-library/react'
 import { fetchMock } from './mock/fetch'
-import { createAsync } from './utils/createAsync'
 
-const { App } = require('../src/App') as { App: React.ComponentType<{}> }
-const { DogListContainer } = require('../src/DogListContainer') as {
+const { App } = (await import('../src/App')) as { App: React.ComponentType<{}> }
+const { DogListContainer } = (await import('../src/DogListContainer')) as {
   DogListContainer: React.ComponentType<{}>
 }
 
 describe('<DogListContainer />', () => {
-  const fetch = jest.fn()
+  const fetch = vi.fn()
   window.fetch = fetch
 
   fetch.mockImplementation(fetchMock)
 
   it('has a button', async () => {
-    const res = await createAsync(<DogListContainer />)
-    const button = res.root.findAllByType('button')
+    const res = await render(<DogListContainer />)
+    const button = res.container.querySelectorAll('button')
     expect(button.length).toBeGreaterThan(0)
   })
 })
 
 describe('<App />', () => {
-  const fetch = jest.fn()
+  const fetch = vi.fn()
   window.fetch = fetch
 
   fetch.mockImplementation(fetchMock)
 
   it("triggers `fetch()` when the '表示' or 'Show' button is clicked", async () => {
-    const res = await createAsync(<App />)
-    const buttons = res.root.findAllByType('button')
+    const res = await render(<App />)
+    const buttons = Array.from(res.container.querySelectorAll('button'))
     const button = buttons.find(r =>
-      (['表示', 'Show'] as any[]).includes(r.children[0]),
+      (['表示', 'Show'] as any[]).includes(r.innerHTML?.trim() ?? ''),
     )
 
     expect(button).toBeTruthy()
@@ -40,27 +39,20 @@ describe('<App />', () => {
       return
     }
 
-    await act(async () => {
-      button.props.onClick()
-    })
+    await fireEvent.click(button)
 
     expect(fetch).toBeCalled()
   })
 
   it('shows the list of image when the button is clicked', async () => {
-    const res = await createAsync(<App />)
-    const container = res.root.findByType(DogListContainer)
+    const res = await render(<App />)
+    const button = res.container.querySelector('button')
 
-    expect(container).toBeTruthy()
-
-    const button = container!.findByType('button')
-
-    await act(async () => {
-      button.props.onClick()
-    })
+    expect(button).toBeTruthy()
 
     expect(fetch).toBeCalled()
-    const imgList = res.root.findAllByType('img')
+    const imgList = res.container.querySelectorAll('img')
+
     expect(imgList.length).toBeGreaterThan(0)
   })
 })

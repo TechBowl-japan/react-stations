@@ -7,6 +7,7 @@ module.exports = {
     'eslint:recommended',
     'eslint-config-prettier',
     'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
   ],
   parserOptions: {
@@ -16,23 +17,13 @@ module.exports = {
       jsx: true,
     },
   },
-  parser: '@babel/eslint-parser',
-  plugins: ['react', 'prettier', 'import', 'react-hooks'],
+  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   rules: {
     'react/jsx-filename-extension': [
       2,
       {
         extensions: ['.js', '.tsx', '.jsx'],
-      },
-    ],
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        js: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never',
       },
     ],
     'react-hooks/rules-of-hooks': 'error',
@@ -48,11 +39,6 @@ module.exports = {
   settings: {
     react: {
       version: 'detect',
-    },
-    'import/resolver': {
-      webpack: {
-        config: 'webpack.config.js',
-      },
     },
   },
 }

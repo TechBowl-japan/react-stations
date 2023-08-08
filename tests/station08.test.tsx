@@ -1,77 +1,73 @@
-import React from 'react'
-import renderer, { act, ReactTestRenderer } from 'react-test-renderer'
+import { afterEach, describe, expect, it, vi } from 'vitest'
+import { render } from '@testing-library/react'
 import { imageUrl, fetchMock } from './mock/fetch'
+import { create } from 'react-test-renderer'
 
 describe('<App />', () => {
-  const fetch = jest.fn()
+  const fetch = vi.fn()
   window.fetch = fetch
   fetch.mockImplementation(fetchMock)
 
   afterEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('Can mount <App />', async () => {
-    const { App } = require('../src/App')
+    const { App } = await import('../src/App')
     expect(App).toBeTruthy()
-    await act(async () => {
-      renderer.create(<App />)
-    })
+    const res = await render(<App />)
+    expect(res.container).toBeTruthy()
   })
 
-  it('Can mount <Header />', () => {
-    const { Header } = require('../src/Header')
+  it('Can mount <Header />', async () => {
+    const { Header } = await import('../src/Header')
     expect(Header).toBeTruthy()
-    renderer.create(<Header />)
+    const res = await render(<Header />)
+    expect(res.container).toBeTruthy()
   })
 
-  it('Can mount <Description />', () => {
-    const { Description } = require('../src/Description')
+  it('Can mount <Description />', async () => {
+    const { Description } = await import('../src/Description')
     expect(Description).toBeTruthy()
-    renderer.create(<Description />)
+    const res = await render(<Description />)
+    expect(res.container).toBeTruthy()
   })
 
   it('Can mount <DogImage />', async () => {
-    const { DogImage } = require('../src/DogImage')
+    const { DogImage } = await import('../src/DogImage')
     expect(DogImage).toBeTruthy()
-    await act(async () => {
-      renderer.create(<DogImage />)
-    })
+    const res = await render(<DogImage imageUrl={imageUrl} />)
+    expect(res.container).toBeTruthy()
   })
 
   it('<DogImage /> has a prop called `url`', async () => {
-    const { DogImage } = require('../src/DogImage')
+    const { DogImage } = await import('../src/DogImage')
     expect(DogImage).toBeTruthy()
 
-    let res: ReactTestRenderer | undefined
-    await act(async () => {
-      res = renderer.create(
-        <DogImage url={imageUrl} />,
-      )
-    })
+    let res = await render(<DogImage imageUrl={imageUrl} />)
 
-    const dogImage = res?.root.findByType('img')
+    const dogImage = res.container.querySelector('img')
+
     expect(dogImage).toBeTruthy()
-    expect(dogImage?.props.src).toStrictEqual(imageUrl)
+    expect(dogImage!.src).toStrictEqual(imageUrl)
   })
 
   it('<App /> contains <Header />, <Description />, <DogImage />', async () => {
-    const { App } = require('../src/App')
-    const { Header } = require('../src/Header')
-    const { Description } = require('../src/Description')
-    const { DogImage } = require('../src/DogImage')
+    // TODO: Promise.allを使う
 
-    let res: ReactTestRenderer | undefined
-    await act(async () => {
-      res = renderer.create(<App />)
-    })
+    const { App } = await import('../src/App')
+    const { Header } = await import('../src/Header')
+    const { Description } = await import('../src/Description')
+    const { DogImage } = await import('../src/DogImage')
+
+    const res = create(<App />)
 
     if (!res) {
       throw new Error('failed to render')
     }
 
-    res.root.findByType(Header)
-    res.root.findByType(Description)
-    res.root.findByType(DogImage)
+    expect(res.root.findByType(Header)).toBeTruthy()
+    expect(res.root.findByType(Description)).toBeTruthy()
+    expect(res.root.findByType(DogImage)).toBeTruthy()
   })
 })

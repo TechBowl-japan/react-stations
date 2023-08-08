@@ -1,14 +1,13 @@
+import { describe, expect, it, vi } from 'vitest'
 import { render } from '@testing-library/react'
-import * as React from 'react'
-import { createAsync } from './utils/createAsync'
 import { compareColor } from './utils/compareColor'
 
-const { App } = require('../src/App') as { App: React.ComponentType<{}> }
+const { App } = (await import('../src/App')) as { App: React.ComponentType<{}> }
 
 describe('<App />', () => {
   it('<App /> has a <header>', async () => {
-    const res = await createAsync(<App />)
-    res.root.findByType('header')
+    const res = await render(<App />)
+    expect(res.container.querySelector('header')).not.toBeNull()
   })
 
   it('#F5F5F5 is specified as the background color of <header>', async () => {

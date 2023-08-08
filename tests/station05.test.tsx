@@ -1,42 +1,65 @@
-import React from 'react'
-import renderer, { act } from 'react-test-renderer'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { fireEvent, render, waitFor } from '@testing-library/react'
 import { fetchMock } from './mock/fetch'
-import { createAsync } from './utils/createAsync'
 
-const { App } = require('../src/App') as { App: React.ComponentType<{}> }
+const React: typeof import('react') = await vi.importActual('react')
+
+const useState = vi.fn()
+
+vi.mock('react', () => {
+  return {
+    ...React,
+    useState,
+  }
+})
+
+const { App } = (await import('../src/App')) as { App: React.ComponentType<{}> }
 
 describe('Station No.5', () => {
-  const fetch = jest.fn()
+  const fetch = vi.fn()
+  let setState: React.Dispatch<React.SetStateAction<unknown>> | undefined
+
   window.fetch = fetch
   fetch.mockImplementation(fetchMock)
 
-  const useState = React.useState
-  const useStateSpy = jest.spyOn(React, 'useState')
-  useStateSpy.mockImplementation((v?: unknown) => useState(v))
-
-  afterEach(() => {
-    jest.clearAllMocks()
+  beforeEach(() => {
+    useState.mockImplementation((v?: unknown) => {
+      const [value, dispatcher] = React.useState(v)
+      setState = dispatcher
+      return [value, dispatcher]
+    })
   })
 
-  it('<App /> calls useState', () => {
-    renderer.create(<App />)
+  afterEach(() => {
+    vi.clearAllMocks()
+  })
 
-    expect(useStateSpy).toBeCalled()
+  it('<App /> calls useState', async () => {
+    await render(<App />)
+    await waitFor(() => {
+      expect(useState).toBeCalled()
+    })
   })
 
   it('state changes when the button is clicked', async () => {
-    const res = await createAsync(<App />)
-    const img = res.root.findByType('img')
-    const button = res.root.findByType('button')
+    const res = await render(<App />)
+    const img = res.container.querySelector('img')
+    const button = res.container.querySelector('button')
 
-    const initialImg = img.props.src
+    if (img === null) {
+      throw new Error('img is null')
+    }
+
+    if (button === null) {
+      throw new Error('button is null')
+    }
+
+    const initialImg = img.src
     expect(initialImg).not.toBeFalsy()
 
-    await act(async () => {
-      button.props.onClick()
-    })
+    await fireEvent.click(button)
 
-    const changedImg = img.props.src
+    const changedImg = img.src
     expect(changedImg).not.toBeFalsy()
 
     expect(changedImg).not.toStrictEqual(initialImg)
