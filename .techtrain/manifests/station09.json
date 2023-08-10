@@ -1,11 +1,17 @@
 {
-  "name": "Station 09", 
+  "name": "Station 09",
   "id": 9,
   "prepare": [],
   "tests": [
     {
-      "type": "jest",
-      "specFile": "./tests/station09.test.tsx"
+      "type": "junit-compat",
+      "command": "yarn",
+      "args": [
+        "vitest",
+        "--reporter=junit",
+        "--watch=false",
+        "./tests/station09.test.tsx"
+      ]
     }
   ]
 }
