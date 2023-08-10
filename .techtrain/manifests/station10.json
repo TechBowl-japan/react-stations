@@ -4,8 +4,14 @@
   "prepare": [],
   "tests": [
     {
-      "type": "jest",
-      "specFile": "./tests/station10.test.tsx"
+      "type": "junit-compat",
+      "command": "yarn",
+      "args": [
+        "vitest",
+        "--reporter=junit",
+        "--watch=false",
+        "./tests/station10.test.tsx"
+      ]
     }
   ]
 }
