@@ -5,7 +5,7 @@
   "tests": [
     {
       "type": "junit-compat",
-      "command": "yarn",
+      "command": "npx",
       "args": [
         "vitest",
         "--reporter=junit",
