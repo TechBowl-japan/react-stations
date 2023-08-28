@@ -33,7 +33,7 @@ describe('<BreedsSelect />', () => {
 })
 
 describe('<App />', () => {
-  it('value changes when `onChange` wes called', async () => {
+  it('value changes when `onChange` was called', async () => {
     const { App } = await import('../src/App')
     const res = await render(<App />)
     const selectTag = res.container.querySelector('select')!
