@@ -33,17 +33,26 @@ describe('<BreedsSelect />', () => {
 })
 
 describe('<App />', () => {
-  it('value changes when `onChange` wes called', async () => {
+  it('value changes when `onChange` was called', async () => {
     const { App } = await import('../src/App')
     const res = await render(<App />)
     const selectTag = res.container.querySelector('select')!
-    const value = 'test'
+    const optionTags = res.container.querySelectorAll('option')!
+    // 1番目のoptionは空文字列などが仕込まれている可能性があるため、２番目以降の値で選択されるようにする
+    // ようにテストを行っている。
+    const selectedOptionValue = optionTags[1]?.value
 
-    expect(selectTag).toBeTruthy()
-    await fireEvent.change(selectTag, { target: { value } })
+    expect(selectTag, 'select tagが存在すること').toBeTruthy()
+    expect(optionTags, 'option tagが存在すること').toBeTruthy()
 
+    await fireEvent.change(selectTag, {
+      target: { value: selectedOptionValue },
+    })
     await waitFor(() => {
-      expect(selectTag.value).toBe(value)
+      expect(
+        selectTag.value,
+        'optionタグにおいて特定のタグが選択されている状態にできること',
+      ).toBe(selectedOptionValue)
     })
   })
 })
