@@ -32,7 +32,7 @@
     "simple-git-hooks": "^2.9.0",
     "typescript": "^5.1.6",
     "vite": "^4.4.9",
-    "vitest": "^0.34.2"
+    "vitest": "^0.34.4"
   },
   "scripts": {
     "dev": "vite",
