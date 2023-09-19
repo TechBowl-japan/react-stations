@@ -27,8 +27,12 @@ describe('<BreedsSelect />', () => {
       '../src/BreedsSelect'
     )) as IBreedsSelect
     const res = await render(<BreedsSelect breeds={breeds} />)
-    expect(res.container.querySelectorAll('select').length).not.toBe(0)
-    expect(res.container.querySelectorAll('option').length).not.toBe(0)
+
+    // NOTE: 非同期処理等でselectおよびoptionタグが存在しない場合があるため、waitForを使用する
+    await waitFor(() => {
+      expect(res.container.querySelectorAll('select').length).not.toBe(0)
+      expect(res.container.querySelectorAll('option').length).not.toBe(0)
+    })
   })
 })
 
@@ -36,11 +40,24 @@ describe('<App />', () => {
   it('value changes when `onChange` was called', async () => {
     const { App } = await import('../src/App')
     const res = await render(<App />)
-    const selectTag = res.container.querySelector('select')!
-    const optionTags = res.container.querySelectorAll('option')!
-    // 1番目のoptionは空文字列などが仕込まれている可能性があるため、２番目以降の値で選択されるようにする
-    // ようにテストを行っている。
-    const selectedOptionValue = optionTags[1]?.value
+
+    // NOTE: 非同期処理等でselectおよびoptionタグが存在しない場合があるため、waitForを使用する
+    const selectTag = await waitFor(
+      () => res.container.querySelector('select')!,
+    )
+    const optionTags = await waitFor(() => {
+      const options = res.container.querySelectorAll('option')
+      if (options.length === 0) {
+        throw new Error('optionタグが存在しません')
+      } else if (options.length === 1 && options[0].value === '') {
+        throw new Error('有効な選択肢が存在しません')
+      }
+
+      return options
+    })
+
+    // NOTE: 1つ目の選択肢がplaceholder (value="")の場合があることの考慮
+    const selectedOptionValue = optionTags[0]?.value || optionTags[1]?.value
 
     expect(selectTag, 'select tagが存在すること').toBeTruthy()
     expect(optionTags, 'option tagが存在すること').toBeTruthy()
