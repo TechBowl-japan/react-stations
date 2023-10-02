@@ -5,7 +5,11 @@ import './App.css'
 /**
  * @type {() => JSX.Element}
  */
-export const App = () => {
+  import React, { useState } from 'react';
+
+  export const dog = () => {
+    const [dogUrl, setDogUrl] = useState("https://images.dog.ceo/breeds/pomeranian/n02112018_5540.jpg");
+  
   return (
     <div>
       <header>
@@ -18,4 +22,4 @@ export const App = () => {
       {/* 犬の画像と画像の説明文を表示させる。。 */}
     </div>
   )
-}
+};
