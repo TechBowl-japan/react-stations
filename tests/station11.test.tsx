@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent, render, waitFor } from '@testing-library/react'
 import { fetchMock } from './mock/fetch'
 
 const { App } = (await import('../src/App')) as { App: React.ComponentType<{}> }
@@ -51,8 +51,12 @@ describe('<App />', () => {
     expect(button).toBeTruthy()
 
     expect(fetch).toBeCalled()
-    const imgList = res.container.querySelectorAll('img')
-
-    expect(imgList.length).toBeGreaterThan(0)
+    await waitFor(() => {
+      const imgList = res.container.querySelectorAll('img')
+      expect(imgList.length).toBeGreaterThan(1)
+      imgList.forEach((img) => {
+        expect(img.src).not.toBe('');
+      })
+    })
   })
 })
