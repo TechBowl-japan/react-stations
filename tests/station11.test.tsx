@@ -1,5 +1,5 @@
-import { describe, expect, it, vi } from 'vitest'
 import { fireEvent, render, waitFor } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 import { fetchMock } from './mock/fetch'
 
 const { App } = (await import('../src/App')) as { App: React.ComponentType<{}> }
@@ -49,6 +49,9 @@ describe('<App />', () => {
     const button = res.container.querySelector('button')
 
     expect(button).toBeTruthy()
+
+    if(!button)return;
+    expect(fireEvent.click(button)).toBeTruthy()
 
     expect(fetch).toBeCalled()
     await waitFor(() => {
