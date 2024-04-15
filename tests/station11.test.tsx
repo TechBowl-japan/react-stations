@@ -1,5 +1,5 @@
-import { describe, expect, it, vi } from 'vitest'
 import { fireEvent, render, waitFor } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 import { fetchMock } from './mock/fetch'
 
 const { App } = (await import('../src/App')) as { App: React.ComponentType<{}> }
@@ -46,9 +46,17 @@ describe('<App />', () => {
 
   it('shows the list of image when the button is clicked', async () => {
     const res = await render(<App />)
-    const button = res.container.querySelector('button')
+    const buttons = Array.from(res.container.querySelectorAll('button'))
+    const button = buttons.find(r =>
+      (['表示', 'Show'] as any[]).includes(r.innerHTML?.trim() ?? ''),
+    )
 
     expect(button).toBeTruthy()
+
+    if (!button) {
+      return
+    }
+    expect(fireEvent.click(button)).toBeTruthy()
 
     expect(fetch).toBeCalled()
     await waitFor(() => {
