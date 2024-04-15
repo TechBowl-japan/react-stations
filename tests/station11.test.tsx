@@ -53,7 +53,9 @@ describe('<App />', () => {
 
     expect(button).toBeTruthy()
 
-    if(!button)return;
+    if (!button) {
+      return
+    }
     expect(fireEvent.click(button)).toBeTruthy()
 
     expect(fetch).toBeCalled()
