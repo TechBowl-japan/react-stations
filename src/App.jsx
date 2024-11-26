@@ -24,6 +24,7 @@ export const App = () => {
       <p>犬の画像を表示するサイトです。</p>
       <img src={dogUrl} alt="犬の画像" />
       <button onClick={fetchDogImage}>更新</button>
+      commit test
     </div>
   )
 }
