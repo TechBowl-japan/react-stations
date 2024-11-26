@@ -20,9 +20,9 @@ export const App = () => {
 
   return (
     <div>
-      <header>React Station 初級</header>
+      <header style={{ backgroundColor: '#f5f5f5' }}>React Station 初級</header>
       <p>犬の画像を表示するサイトです。</p>
-      <img src={dogUrl} alt="犬の画像" />
+      <img className='dog-img' src={dogUrl} alt='犬の画像' />
       <button onClick={fetchDogImage}>更新</button>
     </div>
   )
