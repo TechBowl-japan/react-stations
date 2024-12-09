@@ -41,7 +41,7 @@ export const App = () => {
 
   return (
     <>
-      <header>アプリ</header>
+      <header className="header">アプリ</header>
       <main>
         <div>
           <img src={dogUrl} alt="dog" />
