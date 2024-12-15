@@ -1,6 +1,8 @@
 // DO NOT DELETE
 import { useState } from 'react'
 import './App.css'
+import Header from './Header'
+import Description from './Description'
 
 /**
  * @type {() => JSX.Element}
@@ -10,7 +12,7 @@ export const App = () => {
     'https://images.dog.ceo/breeds/spaniel-brittany/n02101388_6057.jpg',
   )
 
-  const onClickCUrl = () => {
+  const onClickUrl = () => {
     //urlを定義
     //const randomUrl;
     //fetchでapi呼び出す
@@ -34,6 +36,7 @@ export const App = () => {
       })
       .then(json => {
         if (json) {
+          console.log(json)
           setDogUrl(json.message)
         }
       })
@@ -41,12 +44,9 @@ export const App = () => {
 
   return (
     <>
-      <header className="header">アプリ</header>
+      <Header />
       <main>
-        <div>
-          <img src={dogUrl} alt="dog" />
-        </div>
-        <button onClick={onClickCUrl}>change URL</button>
+        <Description dogUrl={dogUrl} onClickUrl={onClickUrl} />
       </main>
     </>
   )
