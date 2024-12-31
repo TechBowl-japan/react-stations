@@ -4,3 +4,36 @@
   font-weight: bold;
   padding: 16px;
 }
+
+/* .dogImgListContainer */
+.dogListContainer {
+  border-top: solid 1px #ddd;
+  margin: 20px 0 0;
+  padding: 20px 0 20px;
+}
+
+.primaryBtn {
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bo;
+  margin: 0;
+  min-width: 100px;
+  padding: 5px 20px;
+}
+
+.dogImgList {
+  background-color: paleturquoise;
+  margin-top: 20px;
+  padding: 20px;
+}
+
+.dogImgList img {
+  max-width: 300px;
+}
+
+/* BreedSelect */
+.breedSelectBox {
+  width: 300px;
+}
