@@ -16,7 +16,7 @@
   background-color: #007bff;
   border: none;
   border-radius: 5px;
-  color: white;
+  color: #fff;
   font-weight: bo;
   margin: 0;
   min-width: 100px;
@@ -25,12 +25,18 @@
 
 .dogImgList {
   background-color: paleturquoise;
+  display: flex;
+  list-style: none;
   margin-top: 20px;
   padding: 20px;
+  width: 100%;
+}
+.dogImgList > li + li {
+  margin: 10px;
 }
 
 .dogImgList img {
-  max-width: 300px;
+  max-width: 200px;
 }
 
 /* BreedSelect */

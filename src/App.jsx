@@ -14,8 +14,6 @@ export const App = () => {
   )
 
   const onClickUrl = () => {
-    //urlを定義
-    //const randomUrl;
     //fetchでapi呼び出す
     fetch('https://dog.ceo/api/breeds/image/random')
       .then(response => {
@@ -23,8 +21,7 @@ export const App = () => {
         console.log(response.status)
         //status 200以外
         if (!response.ok) {
-          console.log('error')
-
+          //console.log('error')
           setDogUrl(
             'https://images.dog.ceo/breeds/hound-english/n02089973_1132.jpg',
           )
@@ -37,7 +34,7 @@ export const App = () => {
       })
       .then(json => {
         if (json) {
-          console.log(json)
+          //console.log(json)
           setDogUrl(json.message)
         }
       })
