@@ -11,9 +11,9 @@ export const Description = props => {
         <DogImage imageUrl={dogUrl} />
       </div>
       <div>
-        <button className="primaryBtn" onClick={onClickUrl}>
-          change URL
-        </button>
+        <div className="primaryBtn" onClick={onClickUrl}>
+          更新
+        </div>
       </div>
     </>
   )

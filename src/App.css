@@ -26,6 +26,7 @@
 .dogImgList {
   background-color: paleturquoise;
   display: flex;
+  flex-wrap: wrap;
   list-style: none;
   margin-top: 20px;
   padding: 20px;

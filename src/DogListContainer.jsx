@@ -35,10 +35,11 @@ export const DogListContainer = () => {
   }
 
   const changeBreed = () => {
-    if (!selectedBreed) {
-      alert('犬種を選択してください！')
-      return
-    }
+    // if (!selectedBreed) {
+    //   alert('犬種を選択してください！')
+    //   return
+    // }
+
     //console.log(`selectedBreed(button):${selectedBreed}`)
 
     //選択犬種の画像一覧取得
@@ -62,7 +63,6 @@ export const DogListContainer = () => {
   return (
     <>
       <h1>json List</h1>
-      <p>犬種選択プルダウン</p>
       <BreedsSelect breeds={breeds} selectedBreed={getBreed} />
       <button onClick={changeBreed}>表示</button>
       <ul className="dogImgList">
