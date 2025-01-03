@@ -6,8 +6,7 @@ const BreedsSelect = props => {
     <>
       <select
         className="breedSelectBox"
-        //breeds={breeds}
-        defaultValue={''}
+        defaultValue={'affenpinscher'}
         onChange={selectedBreed}
       >
         <option value="" disabled>

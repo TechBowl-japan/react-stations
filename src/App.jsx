@@ -21,20 +21,16 @@ export const App = () => {
         console.log(response.status)
         //status 200以外
         if (!response.ok) {
-          //console.log('error')
           setDogUrl(
             'https://images.dog.ceo/breeds/hound-english/n02089973_1132.jpg',
           )
         } else {
           //status 200のとき
-          return response.json()
-          //return response.json(); を書くことで、次の .then にパース済みの JSON データが渡される。
-          // これにより、非同期処理のチェーンが正しく動作する。
+          return response.json() //次の.thenにパース済みのJSONデータが渡される。非同期処理のチェーンが正しく動作。
         }
       })
       .then(json => {
         if (json) {
-          //console.log(json)
           setDogUrl(json.message)
         }
       })

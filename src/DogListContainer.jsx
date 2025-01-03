@@ -5,14 +5,13 @@ import BreedsSelect from './BreedsSelect'
 export const DogListContainer = () => {
   //犬種一覧データを保持する
   const [breeds, setBreeds] = useState([])
-  const [selectedBreed, setSelectedBreed] = useState('')
+  const [selectedBreed, setSelectedBreed] = useState('affenpinscher')
   const [urls, setUrls] = useState([])
 
   useEffect(() => {
     //犬種一覧取得
     fetch('https://dog.ceo/api/breeds/list/all')
       .then(response => {
-        //console.log(response.status)
         //status 200以外の場合
         if (!response.ok) {
           console.log('error')
@@ -35,20 +34,12 @@ export const DogListContainer = () => {
   }
 
   const changeBreed = () => {
-    // if (!selectedBreed) {
-    //   alert('犬種を選択してください！')
-    //   return
-    // }
-
-    //console.log(`selectedBreed(button):${selectedBreed}`)
-
     //選択犬種の画像一覧取得
-    fetch(`https://dog.ceo/api/breed/${selectedBreed}/images`)
+    fetch(`https://dog.ceo/api/breed/${selectedBreed}/images/random/4`)
       .then(response => {
         if (!response.ok) {
           console.log('error')
         } else {
-          //console.log('200 button')
           return response.json() //breedsの犬種一覧を格納
         }
       })
