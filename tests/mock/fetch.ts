@@ -1,4 +1,4 @@
-export const imageUrl = 'https://avatars.githubusercontent.com/u/298748'
+export const imageUrl = 'https://github.com/TechBowl-japan/railway-assets/blob/main/react-syokyu-mock/techtrain.png?raw=true'
 
 export type Breeds = Record<string, string[]>
 
