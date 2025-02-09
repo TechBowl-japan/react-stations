@@ -1,7 +1,7 @@
 // DO NOT DELETE
 import { useState } from 'react'
 import Header from './Header'
-import { DogListContainer } from './DogListContainer'
+import { Description } from './Description'
 import './App.css'
 
 const DEFAULT_DOG_URL = 'https://images.dog.ceo/breeds/spaniel-brittany/n02101388_6057.jpg'
@@ -14,26 +14,26 @@ const DOG_API_URL = 'https://dog.ceo/api/breeds/image/random'
 export const App = () => {
   // stateはそのstateを使用するコンポーネントの最も近い共通の親コンポーネントで管理されるべきであり、
   // その原則は「state のリフトアップ」と呼ばれる
-const [dogurl, setDogurl] = useState(DEFAULT_DOG_URL)
+const [imageUrl, setImageUrl] = useState(DEFAULT_DOG_URL)
 
 const imgUpdate = async () => {
   try {
     const response = await fetch(DOG_API_URL)
     const data = await response.json()
-    setDogurl(data.message)
+    setImageUrl(data.message)
   } catch (error) {
     console.error('Error fetching dog image:', error)
   }
 }
 const imgReset = () => {
-  setDogurl(DEFAULT_DOG_URL)
+  setImageUrl(DEFAULT_DOG_URL)
 }
 
   return (
     <div className='container'>
       <Header />
-      <DogListContainer 
-        dogurl={dogurl}
+      <Description 
+        imageUrl={imageUrl}
         imgUpdate={imgUpdate}
         imgReset={imgReset}
       />

@@ -2,18 +2,18 @@
 import { DogImage } from './DogImage'
 
 type Props = {
-  dogurl: string
+  imageUrl: string
   imgUpdate: () => void
   imgReset: () => void
 }
 
-export const DogListContainer = ( {dogurl, imgUpdate, imgReset} : Props ) => {
+export const Description = ( {imageUrl, imgUpdate, imgReset} : Props ) => {
   return (
     // <> </>はReactフラグメントと呼ばれるもので、複数の要素をまとめて返すことができる
     <>
       <p>犬の画像を表示するサイトです</p>
       <div className='dog-img-wrapper'>
-        <DogImage dogurl={dogurl} />
+        <DogImage imageUrl={imageUrl} />
       </div>
       <div className='btn-wrapper'>
         <button onClick={imgUpdate}>更新</button>
@@ -23,4 +23,4 @@ export const DogListContainer = ( {dogurl, imgUpdate, imgReset} : Props ) => {
   )
 }
 
-export default DogListContainer
+export default Description
