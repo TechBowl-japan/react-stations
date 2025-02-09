@@ -2,6 +2,7 @@
 // 1. コンポーネント内でbreeds状態を管理（useState）
 // 2. useEffectでAPI呼び出し
 // 3. レスポンスから犬種リストを生成してbreeds状態に保存
+// 4. 選択された犬種の状態管理
 //
 // 注意点：
 // - 2階層以降は無視（サブブリードは含めない）
@@ -20,6 +21,8 @@ const DOG_LIST_API_URL = 'https://dog.ceo/api/breeds/list/all'
 export const DogListContainer = ({ dogBreeds }: Props) => {
   // 犬種リストの状態管理
   const [breeds, setBreeds] = useState<string[]>([])
+  // 選択中の犬種の状態管理
+  const [selectedBreed, setSelectedBreed] = useState<string | null>(null)
 
   // 犬種リストの取得
   useEffect(() => {
@@ -37,9 +40,18 @@ export const DogListContainer = ({ dogBreeds }: Props) => {
     fetchDogList()
   }, []) // 依存配列は空
 
+  // 犬種選択時のハンドラー
+  const handleBreedChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedBreed(event.target.value || null)
+  }
+
   return (
     <div className="dog-list">
-      <BreedsSelect breeds={breeds} />
+      <BreedsSelect 
+        breeds={breeds} 
+        selectedBreed={selectedBreed} 
+        handleBreedChange={handleBreedChange}
+      />
     </div>
   )
 }
