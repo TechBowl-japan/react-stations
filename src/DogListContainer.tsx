@@ -25,13 +25,9 @@ export const DogListContainer = ({ dogBreeds }: Props) => {
   // 犬種リストの状態管理
   const [breeds, setBreeds] = useState<string[]>([])
   // 選択中の犬種の状態管理（一時保存用）
-  // const [tempSelectedBreed, setTempSelectedBreed] = useState<string | null>(null)
-  // 初期値がnullだとe2eテストがエラーになるので初期値を設定
-  const [tempSelectedBreed, setTempSelectedBreed] = useState<string>('african')
+  const [tempSelectedBreed, setTempSelectedBreed] = useState<string | null>(null)
   // 確定した犬種の状態管理（画像取得用）
-  // const [confirmedBreed, setConfirmedBreed] = useState<string | null>(null)
-  // 初期値がnullだとe2eテストがエラーになるので初期値を設定
-  const [confirmedBreed, setConfirmedBreed] = useState<string>('african')
+  const [confirmedBreed, setConfirmedBreed] = useState<string | null>(null)
   // 犬種の画像リストの状態管理
   const [breedImages, setBreedImages] = useState<string[]>([])
 
@@ -43,17 +39,13 @@ export const DogListContainer = ({ dogBreeds }: Props) => {
         const data = await response.json()
         const breedsList = Object.keys(data.message)
         setBreeds(breedsList)
-        // リスト取得後に初期値を設定
-        // 初期値がnullだとe2eテストがエラーになるので初期値を設定
-        setTempSelectedBreed('african')
-        setConfirmedBreed('african')
         console.log('Breeds list loaded:', breedsList)
       } catch (error) {
         console.error('Error fetching dog list:', error)
       }
     }
     fetchDogList()
-  }, [])
+  }, []) // 依存配列は空
 
   // 犬種の画像リストの取得
   useEffect(() => {
@@ -81,8 +73,10 @@ export const DogListContainer = ({ dogBreeds }: Props) => {
 
   // 画像取得ボタンのハンドラー
   const handleFetchImages = () => {
-    setConfirmedBreed(tempSelectedBreed)
-    console.log('Fetching images for breed:', tempSelectedBreed)
+    if (tempSelectedBreed) {
+      setConfirmedBreed(tempSelectedBreed)
+      console.log('Fetching images for breed:', tempSelectedBreed)
+    }
   }
 
   return (
