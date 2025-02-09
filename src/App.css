@@ -33,3 +33,47 @@
     }
   }
 }
+
+.dog-list {
+  .breeds-select-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .fetch-images-btn {
+    background-color: #000;
+    color: #fff;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    
+    &:hover:not(:disabled) {
+      background-color: #333;
+    }
+  }
+  .dog-img-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    .dog-img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+}
