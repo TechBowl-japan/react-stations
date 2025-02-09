@@ -1,4 +1,6 @@
 // @ts-check
+import { DogImage } from './DogImage'
+
 type Props = {
   dogurl: string
   imgUpdate: () => void
@@ -11,7 +13,7 @@ export const DogListContainer = ( {dogurl, imgUpdate, imgReset} : Props ) => {
     <>
       <p>犬の画像を表示するサイトです</p>
       <div className='dog-img-wrapper'>
-        <img src={dogurl} alt="犬の画像" className='dog-img' />
+        <DogImage dogurl={dogurl} />
       </div>
       <div className='btn-wrapper'>
         <button onClick={imgUpdate}>更新</button>
