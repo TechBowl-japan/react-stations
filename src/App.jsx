@@ -1,11 +1,13 @@
 // DO NOT DELETE
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from './Header'
 import { Description } from './Description'
+import { DogListContainer } from './DogListContainer'
 import './App.css'
 
 const DEFAULT_DOG_URL = 'https://images.dog.ceo/breeds/spaniel-brittany/n02101388_6057.jpg'
 const DOG_API_URL = 'https://dog.ceo/api/breeds/image/random'
+const DOG_LIST_API_URL = 'https://dog.ceo/api/breeds/list/all'
 
 /**
  *
@@ -36,6 +38,9 @@ const imgReset = () => {
         imageUrl={imageUrl}
         imgUpdate={imgUpdate}
         imgReset={imgReset}
+      />
+      <DogListContainer
+        dogList={dogList}
       />
     </div>
   )
