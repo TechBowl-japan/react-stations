@@ -3,6 +3,7 @@
 // 2. useEffectでAPI呼び出し
 // 3. レスポンスから犬種リストを生成してbreeds状態に保存
 // 4. 選択された犬種の状態管理
+// 5. 画像取得はボタンクリック時に実行
 //
 // 注意点：
 // - 2階層以降は無視（サブブリードは含めない）
@@ -17,13 +18,16 @@ type Props = {
 }
 
 const DOG_LIST_API_URL = 'https://dog.ceo/api/breeds/list/all'
-const DOG_IMAGE_API_URL = 'https://dog.ceo/api/breed/{breed}/images'
+// random/{n}：最大n件の画像をランダム取得
+const DOG_IMAGE_API_URL = 'https://dog.ceo/api/breed/{breed}/images/random/12'
 
 export const DogListContainer = ({ dogBreeds }: Props) => {
   // 犬種リストの状態管理
   const [breeds, setBreeds] = useState<string[]>([])
-  // 選択中の犬種の状態管理
-  const [selectedBreed, setSelectedBreed] = useState<string | null>(null)
+  // 選択中の犬種の状態管理（一時保存用）
+  const [tempSelectedBreed, setTempSelectedBreed] = useState<string | null>(null)
+  // 確定した犬種の状態管理（画像取得用）
+  const [confirmedBreed, setConfirmedBreed] = useState<string | null>(null)
   // 犬種の画像リストの状態管理
   const [breedImages, setBreedImages] = useState<string[]>([])
 
@@ -47,35 +51,52 @@ export const DogListContainer = ({ dogBreeds }: Props) => {
   useEffect(() => {
     const fetchBreedImages = async () => {
       try {
-        const response = await fetch(DOG_IMAGE_API_URL.replace('{breed}', selectedBreed))
+        const response = await fetch(DOG_IMAGE_API_URL.replace('{breed}', confirmedBreed || ''))
         const data = await response.json()
-        // 最大10件に制限
-        const limitedImages = data.message.slice(0, 10)
-        setBreedImages(limitedImages)
-        console.log('Breed images loaded:', limitedImages.length, 'images')
+        setBreedImages(data.message)
+        console.log('Breed images loaded:', data.message.length, 'images')
       } catch (error) {
         console.error('Error fetching breed images:', error)
       }
     }
-    if (selectedBreed) {
+    if (confirmedBreed) {
       fetchBreedImages()
     }
-  }, [selectedBreed])
+  }, [confirmedBreed])
 
-  // 犬種選択時のハンドラー
+  // 犬種選択時のハンドラー（一時保存）
   const handleBreedChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newBreed = event.target.value || null
-    setSelectedBreed(newBreed)
-    console.log('Selected breed:', newBreed)
+    setTempSelectedBreed(newBreed)
+    console.log('Breed selected (not confirmed):', newBreed)
+  }
+
+  // 画像取得ボタンのハンドラー
+  const handleFetchImages = () => {
+    setConfirmedBreed(tempSelectedBreed)
+    console.log('Fetching images for breed:', tempSelectedBreed)
   }
 
   return (
     <div className="dog-list">
-      <BreedsSelect 
-        breeds={breeds} 
-        selectedBreed={selectedBreed} 
-        handleBreedChange={handleBreedChange}
-      />
+      <div className="breeds-select-container">
+        <BreedsSelect 
+          breeds={breeds} 
+          selectedBreed={tempSelectedBreed} 
+          handleBreedChange={handleBreedChange}
+        />
+      </div>
+        <button 
+          onClick={handleFetchImages}
+          disabled={!tempSelectedBreed}
+          className="fetch-images-btn"
+        >
+          表示
+        </button>
+        <div className="dog-info">
+          <p>表示中のお犬：{confirmedBreed}</p>
+          <p>表示中の画像数：{breedImages.length}</p>
+        </div>
       <div className="dog-img-wrapper">
         {breedImages.map((image) => (
           <img key={image} src={image} alt="犬種の画像" className="dog-img" />
