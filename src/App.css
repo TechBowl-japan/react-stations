@@ -1,0 +1,35 @@
+/* 
+標準でPostCSSをサポートしている！
+*/
+.container {
+  text-align: center;
+  background-color: #fff;
+  .header {
+    text-align: center;
+    padding: 10px;
+    background-color: #f5f5f5;
+  }
+  .dog-img-wrapper {
+    min-height: 300px;
+    .dog-img {
+      width: 300px;
+      height: auto;
+    }
+  }
+  
+  .btn-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    button {
+      background-color: #000;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      &:hover {
+        background-color: #333;
+      }
+    }
+  }
+}

@@ -9,7 +9,6 @@ import './App.css'
 export const App = () => {
 
   const DEFAULT_DOG_URL = 'https://images.dog.ceo/breeds/spaniel-brittany/n02101388_6057.jpg'
-  // const NEW_DOG_URL = 'https://images.dog.ceo/breeds/hound-english/n02089973_1132.jpg'
   const DOG_API_URL = 'https://dog.ceo/api/breeds/image/random'
   
 
@@ -30,12 +29,16 @@ export const App = () => {
   }
 
   return (
-    <div>
-      <header>Dogアプリ</header>
+    <div className='container'>
+      <header className='header'>Dogアプリ</header>
       <p>犬の画像を表示するサイトです</p>
-      <img src={dogurl} alt="犬の画像" style={{ width: '300px', height: 'auto' }} />
-      <button onClick={imgUpdate}>更新</button>
-      <button onClick={imgReset}>戻す</button>
+      <div className='dog-img-wrapper'>
+      <img src={dogurl} alt="犬の画像" className='dog-img' />
+      </div>
+      <div className='btn-wrapper'>
+        <button onClick={imgUpdate}>更新</button>
+        <button onClick={imgReset}>戻す</button>
+      </div>
     </div>
   )
 }
