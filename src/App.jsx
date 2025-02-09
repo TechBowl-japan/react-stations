@@ -10,13 +10,23 @@ const DOG_API_URL = 'https://dog.ceo/api/breeds/image/random'
 const DOG_LIST_API_URL = 'https://dog.ceo/api/breeds/list/all'
 
 /**
- *
- * @type {() => JSX.Element}
+ * Appコンポーネント
+ * 
+ * 実装方針：
+ * 1. 画像URLと犬種リストの状態管理
+ * 2. API呼び出しによるデータ取得
+ * 3. 子コンポーネントへのデータ受け渡し
+ * 
+ * 注意点：
+ * - 状態管理は親コンポーネントで行う（状態のリフトアップ）
+ * - ロジックは親コンポーネントに集中させる
+ * - 子コンポーネントにはpropsで必要なデータのみ渡す
  */
+
+// @ts-check
 export const App = () => {
-  // stateはそのstateを使用するコンポーネントの最も近い共通の親コンポーネントで管理されるべきであり、
-  // その原則は「state のリフトアップ」と呼ばれる
-const [imageUrl, setImageUrl] = useState(DEFAULT_DOG_URL)
+  // 状態管理
+  const [imageUrl, setImageUrl] = useState(DEFAULT_DOG_URL)
   const [dogBreeds, setDogBreeds] = useState({})
 
   // 犬種リストの取得
@@ -34,19 +44,22 @@ const [imageUrl, setImageUrl] = useState(DEFAULT_DOG_URL)
   }, [])
 
   // 犬画像の更新処理
-const imgUpdate = async () => {
-  try {
-    const response = await fetch(DOG_API_URL)
-    const data = await response.json()
-    setImageUrl(data.message)
-  } catch (error) {
-    console.error('Error fetching dog image:', error)
+  const imgUpdate = async () => {
+    try {
+      const response = await fetch(DOG_API_URL)
+      const data = await response.json()
+      setImageUrl(data.message)
+    } catch (error) {
+      console.error('Error fetching dog image:', error)
+    }
   }
-}
-const imgReset = () => {
-  setImageUrl(DEFAULT_DOG_URL)
-}
 
+  // 犬画像のリセット処理
+  const imgReset = () => {
+    setImageUrl(DEFAULT_DOG_URL)
+  }
+
+  // レンダリング
   return (
     <div className='container'>
       <Header />
@@ -55,9 +68,7 @@ const imgReset = () => {
         imgUpdate={imgUpdate}
         imgReset={imgReset}
       />
-      <DogListContainer
-        dogBreeds={dogBreeds}
-      />
+      <DogListContainer />
     </div>
   )
 }
@@ -74,3 +85,7 @@ const imgReset = () => {
 // const [dogurl, setDogurl] = useState('https://images.dog.ceo/breeds/spaniel-brittany/n02101388_6057.jpg')
 // Reactでは、状態（state）を直接変更することはできない。setDogurlは状態を更新するための関数です。
 // 疑問：なぜ直接変更できないのか？
+
+// ロジックは親コンポーネントに記述する方が望ましいらしい
+// 親コンポーネントから子コンポーネントにデータを渡すことをリフトアップといい、コンポーネント間でデータを共有するための一般的なパターンである
+// らしいが、課題の指示により子コンポーネントで状態管理行っている。それを正とする理由は面談で確認する（todo）。
