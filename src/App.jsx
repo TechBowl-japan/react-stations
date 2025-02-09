@@ -19,4 +19,8 @@ export const App = () => {
 // メモ
 // JSX（JavaScript XML）は「ジェイエスエックス」と読みます。JavaScriptの構文拡張で、ReactでUIを記述するために使用されます。
 // JSXは、HTMLのようなコードをJavaScriptファイル内に記述できます
-// 
+
+
+// useState
+// state は useState という関数（React 内では Hooks といいます）を使うことで定義できる
+// 疑問：useStateはReactのフック？それともvue3のuseStateと同じ？
