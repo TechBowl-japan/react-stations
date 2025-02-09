@@ -30,9 +30,9 @@ export const DogListContainer = ({ dogBreeds }: Props) => {
       try {
         const response = await fetch(DOG_LIST_API_URL)
         const data = await response.json()
-        // オブジェクトのキーを配列として取得（サブブリードは無視）
         const breedsList = Object.keys(data.message)
         setBreeds(breedsList)
+        console.log('Breeds list loaded:', breedsList)
       } catch (error) {
         console.error('Error fetching dog list:', error)
       }
@@ -42,7 +42,9 @@ export const DogListContainer = ({ dogBreeds }: Props) => {
 
   // 犬種選択時のハンドラー
   const handleBreedChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedBreed(event.target.value || null)
+    const newBreed = event.target.value || null
+    setSelectedBreed(newBreed)
+    console.log('Selected breed:', newBreed)
   }
 
   return (
