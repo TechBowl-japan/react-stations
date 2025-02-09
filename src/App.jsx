@@ -17,7 +17,23 @@ export const App = () => {
   // stateはそのstateを使用するコンポーネントの最も近い共通の親コンポーネントで管理されるべきであり、
   // その原則は「state のリフトアップ」と呼ばれる
 const [imageUrl, setImageUrl] = useState(DEFAULT_DOG_URL)
+  const [dogBreeds, setDogBreeds] = useState({})
 
+  // 犬種リストの取得
+  useEffect(() => {
+    const fetchDogList = async () => {
+      try {
+        const response = await fetch(DOG_LIST_API_URL)
+        const data = await response.json()
+        setDogBreeds(data.message)
+      } catch (error) {
+        console.error('Error fetching dog list:', error)
+      }
+    }
+    fetchDogList()
+  }, [])
+
+  // 犬画像の更新処理
 const imgUpdate = async () => {
   try {
     const response = await fetch(DOG_API_URL)
@@ -40,7 +56,7 @@ const imgReset = () => {
         imgReset={imgReset}
       />
       <DogListContainer
-        dogList={dogList}
+        dogBreeds={dogBreeds}
       />
     </div>
   )
