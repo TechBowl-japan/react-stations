@@ -1,5 +1,5 @@
 // DO NOT DELETE
-import { useState } from 'react'
+import Header from './Header'
 import './App.css'
 
 /**
@@ -30,15 +30,7 @@ export const App = () => {
 
   return (
     <div className='container'>
-      <header className='header'>Dogアプリ</header>
-      <p>犬の画像を表示するサイトです</p>
-      <div className='dog-img-wrapper'>
-      <img src={dogurl} alt="犬の画像" className='dog-img' />
-      </div>
-      <div className='btn-wrapper'>
-        <button onClick={imgUpdate}>更新</button>
-        <button onClick={imgReset}>戻す</button>
-      </div>
+      <Header />
     </div>
   )
 }
