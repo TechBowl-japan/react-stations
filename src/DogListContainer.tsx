@@ -17,12 +17,15 @@ type Props = {
 }
 
 const DOG_LIST_API_URL = 'https://dog.ceo/api/breeds/list/all'
+const DOG_IMAGE_API_URL = 'https://dog.ceo/api/breed/{breed}/images'
 
 export const DogListContainer = ({ dogBreeds }: Props) => {
   // 犬種リストの状態管理
   const [breeds, setBreeds] = useState<string[]>([])
   // 選択中の犬種の状態管理
   const [selectedBreed, setSelectedBreed] = useState<string | null>(null)
+  // 犬種の画像リストの状態管理
+  const [breedImages, setBreedImages] = useState<string[]>([])
 
   // 犬種リストの取得
   useEffect(() => {
@@ -40,6 +43,25 @@ export const DogListContainer = ({ dogBreeds }: Props) => {
     fetchDogList()
   }, []) // 依存配列は空
 
+  // 犬種の画像リストの取得
+  useEffect(() => {
+    const fetchBreedImages = async () => {
+      try {
+        const response = await fetch(DOG_IMAGE_API_URL.replace('{breed}', selectedBreed))
+        const data = await response.json()
+        // 最大10件に制限
+        const limitedImages = data.message.slice(0, 10)
+        setBreedImages(limitedImages)
+        console.log('Breed images loaded:', limitedImages.length, 'images')
+      } catch (error) {
+        console.error('Error fetching breed images:', error)
+      }
+    }
+    if (selectedBreed) {
+      fetchBreedImages()
+    }
+  }, [selectedBreed])
+
   // 犬種選択時のハンドラー
   const handleBreedChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newBreed = event.target.value || null
@@ -54,6 +76,11 @@ export const DogListContainer = ({ dogBreeds }: Props) => {
         selectedBreed={selectedBreed} 
         handleBreedChange={handleBreedChange}
       />
+      <div className="dog-img-wrapper">
+        {breedImages.map((image) => (
+          <img key={image} src={image} alt="犬種の画像" className="dog-img" />
+        ))}
+      </div>
     </div>
   )
 }
