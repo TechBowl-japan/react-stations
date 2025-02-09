@@ -16,6 +16,8 @@ export const App = () => {
       <header>Dogアプリ</header>
       <p>犬の画像を表示するサイトです</p>
       <img src={dogurl} alt="犬の画像" />
+      <button onClick={() => setDogurl('https://images.dog.ceo/breeds/hound-english/n02089973_1132.jpg')}>更新</button>
+      <button onClick={() => setDogurl('https://images.dog.ceo/breeds/spaniel-brittany/n02101388_6057.jpg')}>戻す</button>
     </div>
   )
 }
