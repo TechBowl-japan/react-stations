@@ -14,3 +14,9 @@ export const App = () => {
     </div>
   )
 }
+
+
+// メモ
+// JSX（JavaScript XML）は「ジェイエスエックス」と読みます。JavaScriptの構文拡張で、ReactでUIを記述するために使用されます。
+// JSXは、HTMLのようなコードをJavaScriptファイル内に記述できます
+// 
