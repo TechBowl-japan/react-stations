@@ -9,14 +9,19 @@ import './App.css'
 export const App = () => {
 
   const DEFAULT_DOG_URL = 'https://images.dog.ceo/breeds/spaniel-brittany/n02101388_6057.jpg'
-  const NEW_DOG_URL = 'https://images.dog.ceo/breeds/hound-english/n02089973_1132.jpg'
+  // const NEW_DOG_URL = 'https://images.dog.ceo/breeds/hound-english/n02089973_1132.jpg'
+
+  
 
   // useState を使って dogUrl という state を定義
   // ② setDogurlはなぜ必要？
   const [dogurl, setDogurl] = useState(DEFAULT_DOG_URL)
 
   const imgUpdate = () => {
-    setDogurl(NEW_DOG_URL)
+    fetch('https://dog.ceo/api/breeds/image/random')
+    .then(response => response.json())
+    .then(data => setDogurl(data.message))
+    .catch(error => console.error('Error fetching dog image:', error))
   }
   const imgReset = () => {
     setDogurl(DEFAULT_DOG_URL)
@@ -26,7 +31,7 @@ export const App = () => {
     <div>
       <header>Dogアプリ</header>
       <p>犬の画像を表示するサイトです</p>
-      <img src={dogurl} alt="犬の画像" />
+      <img src={dogurl} alt="犬の画像" style={{ width: '300px', height: 'auto' }} />
       <button onClick={imgUpdate}>更新</button>
       <button onClick={imgReset}>戻す</button>
     </div>
