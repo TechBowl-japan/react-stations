@@ -9,6 +9,7 @@
 
 // @ts-check
 import { useState, useEffect } from 'react'
+import { BreedsSelect } from './BreedsSelect'
 
 type Props = {
   dogBreeds: {[key: string]: string[]}
@@ -38,12 +39,7 @@ export const DogListContainer = ({ dogBreeds }: Props) => {
 
   return (
     <div className="dog-list">
-      <h2>犬種リスト</h2>
-      <ul>
-        {breeds.map((breed) => (
-          <li key={breed}>{breed}</li>
-        ))}
-      </ul>
+      <BreedsSelect breeds={breeds} />
     </div>
   )
 }
