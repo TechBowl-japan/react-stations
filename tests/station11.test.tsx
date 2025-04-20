@@ -50,10 +50,10 @@ describe('<App />', () => {
     const button = buttons.find(r =>
       (['表示', 'Show'] as any[]).includes(r.innerHTML?.trim() ?? ''),
     )
-  
+
     await waitFor(() => {
-      const imgList = res.container.querySelectorAll('option')
-      expect(imgList.length).toBeGreaterThan(1)
+      const optionList = res.container.querySelectorAll('option')
+      expect(optionList.length).toBeGreaterThan(1)
     })
 
     expect(button).toBeTruthy()
@@ -67,8 +67,8 @@ describe('<App />', () => {
     await waitFor(() => {
       const imgList = res.container.querySelectorAll('img')
       expect(imgList.length).toBeGreaterThan(1)
-      imgList.forEach((img) => {
-        expect(img.src).not.toBe('');
+      imgList.forEach(img => {
+        expect(img.src).not.toBe('')
       })
     })
   })
