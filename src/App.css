@@ -1,0 +1,27 @@
+/* 基本の整え：余白とフォント */
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; }
+
+/* 横幅と左右余白をそろえる共通コンテナ */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 12px 16px;
+}
+
+/* ヘッダー */
+.app-header {
+  position: sticky;    
+  top: 0;
+  z-index: 10;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+/* 見た目 */
+.brand {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
