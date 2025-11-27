@@ -130,3 +130,4 @@ temp/
 # End of https://www.toptal.com/developers/gitignore/api/node
 
 .techtrain/config.toml
+.yarn

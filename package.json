@@ -5,7 +5,6 @@
   "repository": "https://github.com/TechBowl-japan/react-stations.git",
   "author": "Hikaru Terazono (3c1u) <3c1u@tohkani.com>",
   "license": "MIT",
-  "private": false,
   "type": "module",
   "dependencies": {
     "@testing-library/react": "^14.0.0",
