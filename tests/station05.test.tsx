@@ -57,11 +57,16 @@ describe('Station No.5', () => {
     const initialImg = img.src
     expect(initialImg).not.toBeFalsy()
 
-    await fireEvent.click(button)
+    fireEvent.click(button)
 
-    const changedImg = img.src
-    expect(changedImg).not.toBeFalsy()
 
-    expect(changedImg).not.toStrictEqual(initialImg)
+    await waitFor(() => {
+      const changedImg = img.src
+
+      expect(changedImg).not.toBeFalsy()
+
+      expect(changedImg).not.toStrictEqual(initialImg)
+    })
+
   })
 })
